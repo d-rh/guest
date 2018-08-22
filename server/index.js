@@ -19,4 +19,4 @@ app.get('/sign', (request, response) => {
 
 
 
-app.listen(3000, () => console.log('Up and running on port 3000!'));
+app.listen(process.env.PORT || 3001, () => console.log('up and running!'));

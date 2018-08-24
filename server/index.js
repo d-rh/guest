@@ -15,9 +15,11 @@ app.get('/', (req, res) => {
 app.get('/sign', (req, res) => {
   res.render('sign', { title : 'Sign In' })
 })
+
 app.get('/welcome', (req, res) => {
   res.render('welcome', {title : 'Welcome!'})
 })
+
 
 
 app.use( (req, res, next) => {

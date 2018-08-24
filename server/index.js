@@ -13,11 +13,13 @@ app.get('/', (req, res) => {
   res.render('index', { title : 'Welcome' })
 })
 app.get('/sign', (req, res) => {
-  res.render('sign')
+  res.render('sign', { title : 'Sign In' })
 })
-app.post('/sign', (req, res) => {
-  res.render('welcome')
+app.get('/welcome', (req, res) => {
+  res.render('welcome', {title : 'Welcome!'})
 })
+
+
 app.use( (req, res, next) => {
   res.status(404)
   res.render('error')

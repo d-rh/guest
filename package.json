@@ -11,6 +11,7 @@
   "author": "derek hammitt",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^3.0.0",
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
     "mongodb": "^3.1.3",

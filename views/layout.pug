@@ -2,6 +2,8 @@ doctype html
 html
   include includes/head.pug
   body
-    block head
+    block header
+      include includes/menu.pug
     block content
-    block foot
+    block foot  
+      include includes/foot.pug

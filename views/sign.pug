@@ -1,14 +1,3 @@
 extends layout
-block head
-  h1 Thanks for visiting. Please sign in below!
 block content
-  form(method="POST" action="/welcome")
-    label first name:
-    input
-    label last name:
-    input
-    label alias:
-    input
-    input(type="submit")
-block foot
-  p thanks!
+  include includes/registerFriend.pug

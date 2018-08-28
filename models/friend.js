@@ -6,7 +6,7 @@ const mongoose        = require('mongoose'),
 
 friendSchema = new Schema(
   {
-    uId: new ObjectId;
+    uId           :     new ObjectId;
     first_name    :     {type: String, required: true, max: 50},
     family_name   :     {type: String, requried: true, max: 100},
     username      :     {type: String, required: true}

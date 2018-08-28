@@ -1,8 +1,8 @@
-const mongoose        = require('mongoose'),
-      schema          = mongoose.Schema,
-      bcrypt          = require(bcrypt),
-      SALT_WORK_FACTOR = 10,
-      ObjectId        = mongoose.Schema.Types.ObjectId;
+const mongoose          = require('mongoose'),
+      schema            = mongoose.Schema,
+      bcrypt            = require(bcrypt),
+      SALT_WORK_FACTOR  = 10,
+      ObjectId          = mongoose.Schema.Types.ObjectId;
 
 friendSchema = new Schema(
   {
@@ -38,4 +38,4 @@ friendSchema
     return this.first_name + ', ' + this.family_name;
 });
 
-module.exports = mongoose.model('Friend', friendSchema);
+module.exports = mongoose.model('FriendModel', friendSchema);

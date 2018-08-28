@@ -1,6 +1,8 @@
-const mongoose    = require('mongoose'),
-      schema      = mongoose.Schema,
-      ObjectId    = mongoose.Schema.Types.ObjectId,
+const mongoose        = require('mongoose'),
+      schema          = mongoose.Schema,
+      bcrypt          = require(bcrypt),
+      SALT_WORK_FACTOR = 10,
+      ObjectId        = mongoose.Schema.Types.ObjectId;
 
 friendSchema = new Schema(
   {
@@ -10,7 +12,24 @@ friendSchema = new Schema(
     username      :     {type: String, required: true}
     password      :     {type: String, required: true}
   }
-)
+);
+
+friendSchema.pre('save', { let user = this;
+  if (!user.isModified('password')) return next();
+});
+
+// we need more salt.
+bcrypt.genSalt(SALT_WORK_FACTOR, (err, salt) => {
+  if (err) return next(err);
+
+  // hash that pw!
+  bcrypt.hash(user.password, salt, (err, hash) {
+    if (err) return next(err);
+      // replace cleartext with hashed pw
+    user.password = hash;
+    next()
+  }) 
+});
 
 // Virtual full name
 friendSchema

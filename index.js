@@ -7,7 +7,6 @@ require('dotenv').config();
 
 //    Connect DB
 mongoose.connect( process.env.DB_URI, { useNewUrlParser: true } )
-const friend_controller = require('./constrollers/friendController')
 
 //    config
 app.set('view engine', 'pug')
@@ -24,9 +23,6 @@ app.get('/sign', (req, res) => {
   res.render('sign', { title : 'Sign In' })
 })
 app.all('/welcome', (req, res) => {
-  if (req.method === 'POST') {
-    friend_controller.friend_create_post
-  }
   res.render('welcome', {title : 'Welcome!'})
 })
 

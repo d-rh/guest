@@ -1,14 +1,16 @@
-const express       = require('express');
-const mongoose      = require('mongoose');
-const app           = express();
+const express       = require('express')
+const mongoose      = require('mongoose')
+const morgan        = require('morgan')
+const app           = express()
 
 require('dotenv').config();
 
 //    Connect DB
-mongoose.connect( process.env.DB_URI, { useNewUrlParser: true } );
+mongoose.connect( process.env.DB_URI, { useNewUrlParser: true } )
 
 //    config
-app.set('view engine', 'pug');
+app.set('view engine', 'pug')
+app.use(morgan('dev'))
 
 //    Mount static path
 app.use('/static', express.static('public'))
@@ -35,4 +37,4 @@ app.use( (req, res, next) => {
   res.render('error')
 })
 
-app.listen(process.env.PORT || 3001, () => console.log('up and running!'));
+app.listen(process.env.PORT || 3001, () => console.log('up and running!'))

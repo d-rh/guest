@@ -1,12 +1,12 @@
 block registration-form
-  form(method="POST" action="/welcome")
-    label first name:
-    input
-    label last name:
-    input
-    label alias:
-    input
-    label password:
-    input
-    input(type="submit" href="/welcome")
+  form(action="/sign" method="post")
+    label(for="first_name") first name:
+    input(id="first_name" type="text")
+    label(for="last_name") last name:
+    input(id="last_name" type="text")
+    label(for="username") New username:
+    input(id="username" type="text")
+    label(for="password") New password:
+    input(id="password" type="text")
+    input(type="submit" value="OK")
   a(href="/guest") Sign in as guest

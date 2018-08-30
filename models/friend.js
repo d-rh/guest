@@ -8,7 +8,7 @@ friendSchema = new Schema(
   {
     uId           :     new ObjectId;
     first_name    :     {type: String, required: true, max: 50},
-    family_name   :     {type: String, requried: true, max: 100},
+    last_name     :     {type: String, requried: true, max: 100},
     username      :     {type: String, required: true}
     password      :     {type: String, required: true}
   }

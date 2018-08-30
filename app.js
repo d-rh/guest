@@ -25,7 +25,7 @@ app.get('/', (req, res) => {
 
 app.route('/sign')
   .get( (req, res) => {
-    res.render('sign')
+    res.render('sign', { title: 'Sign the Guestbook' })
   })
   .post( (req, res) => {
     new_friend_controller.friend_create_post(req.body)

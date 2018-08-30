@@ -6,7 +6,6 @@ const mongoose          = require('mongoose'),
 
 friendSchema = new Schema(
   {
-    // uId           :     new ObjectId,
     first_name    :     {type: String, required: true, max: 50},
     last_name     :     {type: String, requried: true, max: 100},
     username      :     {type: String, required: true},
@@ -17,8 +16,6 @@ friendSchema = new Schema(
 // Virtual full name
 friendSchema
   .virtual('name')
-  .get( () => {
-    return this.first_name + ', ' + this.family_name;
-});
+  .get( () => { return this.first_name + ', ' + this.last_name; });
 
 module.exports = mongoose.model('FriendModel', friendSchema);

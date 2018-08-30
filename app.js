@@ -29,6 +29,7 @@ app.route('/sign')
   })
   .post( (req, res) => {
     new_friend_controller.friend_create_post(req.body)
+    res.render('welcome')
   })
 
 //    Err and Status 404 Handlers //

@@ -1,14 +1,18 @@
 // ~/controllers/friendController.js
 
-const Friend      = require('../models/friend')
+const Friend = require('../models/friend')
 
-exports.friend_create_post = (friend) => {
-  let user = new Friend({
-    first_name : friend.first_name,
-    last_name : friend.last_name,
-    username : friend.username,
-    password : friend.password
+exports.friendCreatePost = (friend) => {
+  // mongoDB generates _id field when a new
+  // document is inserted and it omits
+  // the _id field
+  const user = new Friend({
+    first_name  : friend.first_name,
+    last_name   : friend.last_name,
+    username    : friend.username,
+    password    : friend.password
   })
+
   user.save()
   .then(doc => {
     console.log(doc)

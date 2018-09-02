@@ -1,14 +1,12 @@
-const mongoose          = require('mongoose'),
-      Schema            = mongoose.Schema,
-      bcrypt            = require('bcrypt'),
-      SALT_WORK_FACTOR  = 10,
-      ObjectId          = mongoose.Types.ObjectId;
+const mongoose    = require('mongoose'),
+      Schema      = mongoose.Schema,
+      ObjectId    = mongoose.Types.ObjectId;
 
 friendSchema = new Schema(
   {
     first_name    :     {type: String, required: true, max: 50},
     last_name     :     {type: String, requried: true, max: 100},
-    username      :     {type: String, required: true},
+    username      :     {type: String, required: true, unique: true},
     password      :     {type: String, required: true}
   }
 );
@@ -18,4 +16,4 @@ friendSchema
   .virtual('name')
   .get( () => { return this.first_name + ', ' + this.last_name; });
 
-module.exports = mongoose.model('FriendModel', friendSchema);
+module.exports = mongoose.model('Friend', friendSchema);

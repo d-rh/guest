@@ -1,8 +1,8 @@
-const express       = require('express')
-const mongoose      = require('mongoose')
-const morgan        = require('morgan')
-const bodyParser    = require('body-parser')
-const app           = express()
+const express       = require('express'),
+      mongoose      = require('mongoose'),
+      morgan        = require('morgan'),
+      bodyParser    = require('body-parser'),
+      app           = express()
 
 require('dotenv').config();
 
@@ -17,6 +17,7 @@ const newFriendController = require('./controllers/newFriendController')
 app.set('view engine', 'pug')
 app.use(morgan('dev'))
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
 
 //    Mount static path
 app.use('/static', express.static('public'))

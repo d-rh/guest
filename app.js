@@ -2,7 +2,6 @@ const express       = require('express')
 const mongoose      = require('mongoose')
 const morgan        = require('morgan')
 const bodyParser    = require('body-parser')
-const passport      = require('passport')
 const app           = express()
 
 require('dotenv').config();
@@ -26,6 +25,7 @@ app.use('/static', express.static('public'))
 app.get('/', (req, res) => {
   res.render('index', { title: 'Rockwell Guestbook' })
 })
+
 app.route('/register')
   .get( (req, res) => {
     res.render('register', { title: 'Register' })
@@ -34,10 +34,15 @@ app.route('/register')
     newFriendController.friendCreatePost(req.body)
     res.render('welcome')
   })
-app.route('login')
+
+app.route('/login')
   .get( (req, res) => {
     res.render('login', { title: 'Log In' })
   })
+  .post(
+    // needs to be implemented!
+  )
+
 
 //    Err and Status 404 Handlers //
 app.use( (err, req, res, next) => {

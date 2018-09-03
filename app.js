@@ -2,6 +2,7 @@ const express       = require('express')
 const mongoose      = require('mongoose')
 const morgan        = require('morgan')
 const bodyParser    = require('body-parser')
+const passport      = require('passport')
 const app           = express()
 
 require('dotenv').config();
@@ -25,13 +26,17 @@ app.use('/static', express.static('public'))
 app.get('/', (req, res) => {
   res.render('index', { title: 'Rockwell Guestbook' })
 })
-app.route('/sign')
+app.route('/register')
   .get( (req, res) => {
-    res.render('sign', { title: 'Register' })
+    res.render('register', { title: 'Register' })
   })
   .post( (req, res) => {
     newFriendController.friendCreatePost(req.body)
     res.render('welcome')
+  })
+app.route('login')
+  .get( (req, res) => {
+    res.render('login', { title: 'Log In' })
   })
 
 //    Err and Status 404 Handlers //

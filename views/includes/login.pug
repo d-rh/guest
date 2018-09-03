@@ -1,0 +1,8 @@
+// includes/login.pug
+
+block login-form
+  form(method="post" action="/login")
+    label(for="username") Username:
+    input(name="username" type="text" id="username")
+    label(for="last_name") Password:
+    input(name="password" type="text" id="password")

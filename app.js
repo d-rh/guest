@@ -23,11 +23,11 @@ app.use('/static', express.static('public'))
 
 //    Routes
 app.get('/', (req, res) => {
-  res.render('index', { title : 'Welcome' })
+  res.render('index', { title: 'Rockwell Guestbook' })
 })
 app.route('/sign')
   .get( (req, res) => {
-    res.render('sign', { title: 'Sign the Guestbook' })
+    res.render('sign', { title: 'Register' })
   })
   .post( (req, res) => {
     newFriendController.friendCreatePost(req.body)

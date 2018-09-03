@@ -6,27 +6,38 @@ const express       = require('express'),
 
 require('dotenv').config();
 
-//    Connect DB
+/*    
+|  Connect DB
+*/
 mongoose.connect( process.env.DB_URI, 
                   { useNewUrlParser : true },
                   (err) => { if (err) throw err; console.log('Successfully connected to MongoDB') } 
                 )
-const newFriendController = require('./controllers/newFriendController')
+const newFriendController = require('./controllers/newFriendController'),
+      authController      = require('./controllers/authController')
 
-//    config
+/*    
+|  Config
+*/
 app.set('view engine', 'pug')
 app.use(morgan('dev'))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
-//    Mount static path
+/*    
+|  Static Path
+*/
 app.use('/static', express.static('public'))
 
-//    Routes
+/*    
+|  Routes
+*/
+
+// homepage
 app.get('/', (req, res) => {
   res.render('index', { title: 'Rockwell Guestbook' })
 })
-
+// register new user
 app.route('/register')
   .get( (req, res) => {
     res.render('register', { title: 'Register' })
@@ -35,20 +46,22 @@ app.route('/register')
     newFriendController.friendCreatePost(req.body)
     res.render('welcome')
   })
-
+// login
 app.route('/login')
   .get( (req, res) => {
     res.render('login', { title: 'Log In' })
   })
-  .post(
-    // needs to be implemented!
-  )
+  .post( (req, res) => {
+    authController.verifyLogin(req.body)
+    res.render('index')
+  })
 
-
-//    Err and Status 404 Handlers //
+/*    
+|  Error Handlers
+*/
 app.use( (err, req, res, next) => {
   console.error(err.stack)
-  res.status(500).send('We have a problem!')
+  res.status(500).send(err.stack)
 })
 app.use( (req, res, next) => {
   res.status(404)

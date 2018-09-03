@@ -7,7 +7,7 @@ exports.verifyLogin = (user) => {
   console.log(user)
   friend.findOne({ username: user.username }, function (err, match) {
     console.log(match)
-    match.methods.comparePassword(user.password, function (err, isMatch) {
+    match.comparePassword(user.password, function (err, isMatch) {
       if (err) throw err;
       console.log(isMatch)
     })

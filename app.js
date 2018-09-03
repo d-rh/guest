@@ -1,8 +1,8 @@
-const express       = require('express'),
-      mongoose      = require('mongoose'),
-      morgan        = require('morgan'),
-      bodyParser    = require('body-parser'),
-      app           = express()
+const express    = require('express'),
+      mongoose   = require('mongoose'),
+      morgan     = require('morgan'),
+      bodyParser = require('body-parser'),
+      app        = express()
 
 require('dotenv').config();
 
@@ -53,7 +53,7 @@ app.route('/login')
   })
   .post( (req, res) => {
     authController.verifyLogin(req.body)
-    res.render('index')
+    res.render('welcome', { title: 'Welcome!' })
   })
 
 /*    

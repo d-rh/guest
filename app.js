@@ -9,10 +9,10 @@ require('dotenv').config();
 /*    
 |  Connect DB
 */
-mongoose.connect( process.env.DB_URI, 
-                  { useNewUrlParser : true },
-                  (err) => { if (err) throw err; console.log('Successfully connected to MongoDB') } 
-                )
+mongoose.connect(process.env.DB_URI, { useNewUrlParser : true } )
+  .then(console.log('Successfully connected to MongoDB'))
+  .catch(err => console.log(err))
+
 const newFriendController = require('./controllers/newFriendController'),
       authController      = require('./controllers/authController')
 

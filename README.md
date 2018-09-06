@@ -2,7 +2,8 @@
   * hashing and matching implemented with bcrypt!
 
 * Make the UI aware that a user is currently authenticated
-  * Authorization with JWT (JSON Web Tokens)
+  * Need to create a session with Session ID, userId, name
+  * express-session? Promise in POST /login? not sure
 
 * Allow a currently authenticated user to log themselves out
 

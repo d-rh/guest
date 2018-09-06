@@ -1,8 +1,9 @@
-const express    = require('express'),
-      mongoose   = require('mongoose'),
-      morgan     = require('morgan'),
-      bodyParser = require('body-parser'),
-      app        = express()
+const express      = require('express'),
+      mongoose     = require('mongoose'),
+      morgan       = require('morgan'),
+      bodyParser   = require('body-parser'),
+      cookieParser = require('cookie-parser'),
+      app          = express()
 
 require('dotenv').config();
 
@@ -14,7 +15,8 @@ mongoose.connect(process.env.DB_URI, { useNewUrlParser : true } )
   .catch(err => console.log(err))
 
 const newFriendController = require('./controllers/newFriendController'),
-      authController      = require('./controllers/authController')
+      authController      = require('./controllers/authController'),
+      sessController      = require('./controllers/sessController')
 
 /*    
 |  Config
@@ -52,7 +54,14 @@ app.route('/login')
     res.render('login', { title: 'Log In' })
   })
   .post( (req, res) => {
-    authController.verifyLogin(req.body)
+    function authUser() {
+      return new Promise(() => {
+        authController.verifyLogin(req.body)
+      })
+    }
+    const user = authUser()
+    user.then(console.log(user))
+    // user.then(sessController.createSession)
     res.render('welcome', { title: 'Welcome!' })
   })
 

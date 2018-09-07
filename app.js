@@ -3,6 +3,8 @@ const express      = require('express'),
       morgan       = require('morgan'),
       bodyParser   = require('body-parser'),
       cookieParser = require('cookie-parser'),
+      session      = require('express-session'),
+      mongoStore   = require('connect-mongo')(session),
       app          = express()
 
 require('dotenv').config();

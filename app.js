@@ -54,13 +54,7 @@ app.route('/login')
     res.render('login', { title: 'Log In' })
   })
   .post( (req, res) => {
-    function authUser() {
-      return new Promise(() => {
-        authController.verifyLogin(req.body)
-      })
-    }
-    const user = authUser()
-    user.then(console.log(user))
+    authController.verifyLogin(req.body)
     // user.then(sessController.createSession)
     res.render('welcome', { title: 'Welcome!' })
   })

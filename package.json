@@ -1,11 +1,16 @@
 {
   "name": "guest",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "description": "a guestbook",
   "repository": "https://github.com/d-rh/guest",
   "main": "./app.js",
   "author": "derek hammitt",
   "license": "ISC",
+  "scripts": {
+    "build": "next build",
+    "start": "next start",
+    "dev": "next"
+  },
   "dependencies": {
     "bcrypt": "^3.0.0",
     "body-parser": "^1.18.3",
@@ -18,6 +23,7 @@
     "mongodb": "^3.1.3",
     "mongoose": "^5.2.8",
     "morgan": "^1.9.0",
+    "next": "^6.1.1",
     "nodemon": "^1.18.4",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",

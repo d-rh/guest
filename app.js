@@ -4,7 +4,7 @@ const express      = require('express'),
       bodyParser   = require('body-parser'),
       cookieParser = require('cookie-parser'),
       session      = require('express-session'),
-      mongoStore   = require('connect-mongo')(session),
+      MongoStore   = require('connect-mongo')(session),
       app          = express()
 
 require('dotenv').config();
@@ -27,6 +27,12 @@ app.set('view engine', 'pug')
 app.use(morgan('dev'))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
+app.use('/login', session({
+  MongoStore       : new MongoStore({ mongooseConnection: mongoose.connection }),
+  secret           : process.env.SESS_SECRET,
+  resave           : false,
+  saveUninitialized: false
+}))
 
 /*    
 |  Static Path

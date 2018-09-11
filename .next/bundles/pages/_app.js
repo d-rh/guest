@@ -1,7 +1,7 @@
 module.exports =
 __NEXT_REGISTER_PAGE('/_app', function() {
           var comp =
-      webpackJsonp([1],{
+      webpackJsonp([2],{
 
 /***/ "./node_modules/next/app.js":
 /***/ (function(module, exports, __webpack_require__) {
@@ -298,7 +298,7 @@ module.exports = _extends;
 
 /***/ }),
 
-/***/ 1:
+/***/ 2:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__("./node_modules/next/dist/pages/_app.js");
@@ -306,7 +306,7 @@ module.exports = __webpack_require__("./node_modules/next/dist/pages/_app.js");
 
 /***/ })
 
-},[1])
+},[2])
           return { page: comp.default }
         })
       ;

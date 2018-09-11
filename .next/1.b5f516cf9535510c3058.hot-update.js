@@ -23,7 +23,7 @@ var theme = Object(__WEBPACK_IMPORTED_MODULE_1__material_ui_core_styles__["creat
     },
     secondary: {
       light: '#b22a00',
-      main: '#ff3d00',
+      main: '#wff3d00',
       dark: '#ff6333'
     }
   }
@@ -124,4 +124,4 @@ var _withTheme = _interopRequireDefault(__webpack_require__("./node_modules/@mat
 /***/ })
 
 })
-//# sourceMappingURL=1.38fd5aa382616dd99c38.hot-update.js.map
+//# sourceMappingURL=1.b5f516cf9535510c3058.hot-update.js.map

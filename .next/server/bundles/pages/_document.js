@@ -81,9 +81,6 @@ module.exports =
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_jss___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react_jss__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_ui_core_styles__ = __webpack_require__("@material-ui/core/styles");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_ui_core_styles___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__material_ui_core_styles__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__material_ui_core_colors_deepOrange__ = __webpack_require__("@material-ui/core/colors/deepOrange");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__material_ui_core_colors_deepOrange___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__material_ui_core_colors_deepOrange__);
-
 
 
 var theme = Object(__WEBPACK_IMPORTED_MODULE_1__material_ui_core_styles__["createMuiTheme"])({
@@ -275,13 +272,6 @@ MyDocument.getInitialProps = function (_ref) {
 
 module.exports = __webpack_require__("./pages/_document.js");
 
-
-/***/ }),
-
-/***/ "@material-ui/core/colors/deepOrange":
-/***/ (function(module, exports) {
-
-module.exports = require("@material-ui/core/colors/deepOrange");
 
 /***/ }),
 

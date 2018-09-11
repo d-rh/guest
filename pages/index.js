@@ -10,7 +10,7 @@ const Index = () => (
       <meta name="description" content="Log In, Register, or Sign the Guest Book" />
     </Head>
     <p> Index Page </p>
-    <Button variant="raised">I'm a Material UI Button!</Button>
+    <Button variant="raised"> A Material UI Button!</Button>
   </div>
 );
 

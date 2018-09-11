@@ -149,15 +149,72 @@ module.export = {
 
 /***/ }),
 
+/***/ "./lib/context.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = getContext;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_jss__ = __webpack_require__("react-jss");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_jss___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react_jss__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_ui_core_styles__ = __webpack_require__("@material-ui/core/styles");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_ui_core_styles___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__material_ui_core_styles__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__material_ui_core_colors_deepOrange__ = __webpack_require__("@material-ui/core/colors/deepOrange");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__material_ui_core_colors_deepOrange___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__material_ui_core_colors_deepOrange__);
+
+
+
+var theme = Object(__WEBPACK_IMPORTED_MODULE_1__material_ui_core_styles__["createMuiTheme"])({
+  palette: {
+    primary: {
+      light: '#7f97a2',
+      main: '#607D8B',
+      dark: '#435761'
+    },
+    secondary: {
+      light: '#b22a00',
+      main: '#ff3d00',
+      dark: '#ff6333'
+    }
+  }
+});
+
+function createPageContext() {
+  return {
+    theme: theme,
+    sheetsManager: new Map(),
+    sheetsRegistry: new __WEBPACK_IMPORTED_MODULE_0_react_jss__["SheetsRegistry"](),
+    generateClassName: Object(__WEBPACK_IMPORTED_MODULE_1__material_ui_core_styles__["createGenerateClassName"])()
+  };
+}
+
+function getContext() {
+  if (!process.browser) {
+    return createPageContext();
+  }
+
+  if (!global.INIT_MATERIAL_UI) {
+    global.INIT_MATERIAL_UI = createPageContext();
+  }
+
+  return global.INIT_MATERIAL_UI;
+}
+
+/***/ }),
+
 /***/ "./lib/withLayout.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__("react");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_ui_core_CssBaseline__ = __webpack_require__("@material-ui/core/CssBaseline");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__material_ui_core_CssBaseline___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__material_ui_core_CssBaseline__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Header__ = __webpack_require__("./components/Header.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__("prop-types");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__material_ui_core_styles__ = __webpack_require__("@material-ui/core/styles");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__material_ui_core_styles___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__material_ui_core_styles__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__material_ui_core_CssBaseline__ = __webpack_require__("@material-ui/core/CssBaseline");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__material_ui_core_CssBaseline___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__material_ui_core_CssBaseline__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Header__ = __webpack_require__("./components/Header.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__context__ = __webpack_require__("./lib/context.js");
 var _jsxFileName = "/Users/d-rh/Projects/guest/lib/withLayout.js";
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -181,47 +238,83 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
+
+
+
 function withLayout(BaseComponent) {
   var App =
   /*#__PURE__*/
   function (_React$Component) {
     _inherits(App, _React$Component);
 
-    function App() {
+    function App(props, context) {
+      var _this;
+
       _classCallCheck(this, App);
 
-      return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
+      _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props, context));
+      _this.pageContext = _this.props.pageContext || Object(__WEBPACK_IMPORTED_MODULE_5__context__["a" /* default */])();
+      return _this;
     }
 
     _createClass(App, [{
+      key: "componentWillMount",
+      value: function componentWillMount() {
+        this.pageContext = this.props.pageContext || Object(__WEBPACK_IMPORTED_MODULE_5__context__["a" /* default */])();
+      }
+    }, {
+      key: "componentDidMount",
+      value: function componentDidMount() {
+        var jssStyles = document.querySelector('#jss-server-side');
+
+        if (jssStyles && jssStyles.parentNode) {
+          jssStyles.parentNode.removeChild(jssStyles);
+        }
+      }
+    }, {
       key: "render",
       value: function render() {
-        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", {
+        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__material_ui_core_styles__["MuiThemeProvider"], {
+          theme: this.pageContext.theme,
+          sheetsManager: this.pageContext.sheetsManager,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 10
+            lineNumber: 30
           }
-        }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__material_ui_core_CssBaseline___default.a, {
+        }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 11
+            lineNumber: 34
           }
-        }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_Header__["a" /* default */], _extends({}, this.props, {
+        }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__material_ui_core_CssBaseline___default.a, {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 12
+            lineNumber: 35
+          }
+        }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_Header__["a" /* default */], _extends({}, this.props, {
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 36
           }
         })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(BaseComponent, _extends({}, this.props, {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 13
+            lineNumber: 37
           }
-        })));
+        }))));
       }
     }]);
 
     return App;
   }(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
+
+  App.proptypes = {
+    pageContext: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.object // eslint-disable-line
+
+  };
+  App.defaultProps = {
+    pageContext: null
+  };
 
   App.getInitialProps = function (ctx) {
     if (BaseComponent.getinitialProps) {
@@ -365,6 +458,20 @@ module.exports = require("@material-ui/core/Toolbar");
 
 /***/ }),
 
+/***/ "@material-ui/core/colors/deepOrange":
+/***/ (function(module, exports) {
+
+module.exports = require("@material-ui/core/colors/deepOrange");
+
+/***/ }),
+
+/***/ "@material-ui/core/styles":
+/***/ (function(module, exports) {
+
+module.exports = require("@material-ui/core/styles");
+
+/***/ }),
+
 /***/ "next/head":
 /***/ (function(module, exports) {
 
@@ -379,10 +486,24 @@ module.exports = require("next/link");
 
 /***/ }),
 
+/***/ "prop-types":
+/***/ (function(module, exports) {
+
+module.exports = require("prop-types");
+
+/***/ }),
+
 /***/ "react":
 /***/ (function(module, exports) {
 
 module.exports = require("react");
+
+/***/ }),
+
+/***/ "react-jss":
+/***/ (function(module, exports) {
+
+module.exports = require("react-jss");
 
 /***/ })
 

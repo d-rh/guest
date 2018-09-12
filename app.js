@@ -1,15 +1,8 @@
 const express = require('express');
-
 const mongoose = require('mongoose');
-
 const morgan = require('morgan');
-
 const bodyParser = require('body-parser');
-
-const cookieParser = require('cookie-parser');
-
 const session = require('express-session');
-
 const MongoStore = require('connect-mongo')(session);
 
 const app = express();
@@ -19,6 +12,7 @@ require('dotenv').config();
 /*
 |  Connect DB
 */
+mongoose.set('useCreateIndex', true);
 mongoose
   .connect(
     process.env.DB_URI,
@@ -31,8 +25,6 @@ const newFriendController = require('./controllers/newFriendController');
 
 const authController = require('./controllers/authController');
 
-const sessController = require('./controllers/sessController');
-
 /*
 |  Config
 */
@@ -41,9 +33,8 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(
-  '/login',
   session({
-    MongoStore: new MongoStore({ mongooseConnection: mongoose.connection }),
+    store: new MongoStore({ mongooseConnection: mongoose.connection }),
     secret: process.env.SESS_SECRET,
     resave: false,
     saveUninitialized: false,
@@ -96,4 +87,6 @@ app.use((req, res, next) => {
   res.status(404);
   res.render('error');
 });
-app.listen(process.env.PORT || 3000, () => console.log(`Server up and running on port ${process.env.PORT}!`));
+app.listen(process.env.PORT || 3000, () => {
+  console.log(`Server up and running on port ${process.env.PORT}!`);
+});

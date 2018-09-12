@@ -2,7 +2,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 
@@ -13,6 +12,7 @@ require('dotenv').config();
 /*
 |  Connect DB
 */
+mongoose.set('useCreateIndex', true);
 mongoose
   .connect(
     process.env.DB_URI,
@@ -35,9 +35,8 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(
-  '/login',
   session({
-    MongoStore: new MongoStore({ mongooseConnection: mongoose.connection }),
+    store: new MongoStore({ mongooseConnection: mongoose.connection }),
     secret: process.env.SESS_SECRET,
     resave: false,
     saveUninitialized: false,
@@ -54,7 +53,13 @@ app.use('/static', express.static('public'));
 */
 
 // homepage
-app.get('/', (req, res) => {
+app.route('/').get((req, res) => {
+  if (req.session.views) {
+    req.session.views += 1;
+  } else {
+    req.session.views = 1;
+  }
+  console.log(req.session);
   res.render('index', { title: 'Rockwell Guestbook' });
 });
 // register new user

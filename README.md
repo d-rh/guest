@@ -1,4 +1,4 @@
-- Implement React front end with Material UI
+- Implement front end styled with Material UI
 
 - Make the UI aware that a user is currently authenticated
 

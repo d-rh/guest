@@ -22,7 +22,6 @@ mongoose
   .catch(err => console.log(err));
 
 const newFriendController = require('./controllers/newFriendController');
-
 const authController = require('./controllers/authController');
 
 /*
@@ -52,6 +51,11 @@ app.use('/static', express.static('public'));
 
 // homepage
 app.get('/', (req, res) => {
+  if (req.session.views) {
+    req.session.views += 1;
+  } else {
+    req.session.views = 1;
+  }
   res.render('index', { title: 'Rockwell Guestbook' });
 });
 // register new user

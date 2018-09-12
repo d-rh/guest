@@ -3,4 +3,5 @@ node_modules
 .env
 .eslintrc.js
 .package-lock.json
-.yarn.lock
+yarn.lock
+.next

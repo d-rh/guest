@@ -31,14 +31,14 @@ app.set('view engine', 'pug');
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(
-  session({
-    store: new MongoStore({ mongooseConnection: mongoose.connection }),
-    secret: process.env.SESS_SECRET,
-    resave: false,
-    saveUninitialized: false,
-  }),
-);
+// app.use(
+//   session({
+//     store: new MongoStore({ mongooseConnection: mongoose.connection }),
+//     secret: process.env.SESS_SECRET,
+//     resave: false,
+//     saveUninitialized: false,
+//   }),
+// );
 
 /*
 |  Static Path
@@ -49,13 +49,18 @@ app.use('/static', express.static('public'));
 |  Routes
 */
 
+app.use((req, res, next) => {
+  console.log('TITS TITS TITS TITS TITS TITS TITS TITS TITS TITS ');
+  next();
+});
+
 // homepage
 app.get('/', (req, res) => {
-  if (req.session.views) {
-    req.session.views += 1;
-  } else {
-    req.session.views = 1;
-  }
+  // if (req.session.views) {
+  //   req.session.views += 1;
+  // } else {
+  //   req.session.views = 1;
+  // }
   res.render('index', { title: 'Rockwell Guestbook' });
 });
 // register new user
@@ -75,9 +80,16 @@ app
     res.render('login', { title: 'Log In' });
   })
   .post((req, res) => {
-    authController.verifyLogin(req.body);
+    authController
+      .verifyLogin(req.body)
+      .then((result) => {
+        res.render('welcome', { title: 'Welcome!', result });
+      })
+      .catch((err) => {
+        console.error(err.stack);
+        res.status(500).send(err.stack);
+      });
     // user.then(sessController.createSession)
-    res.render('welcome', { title: 'Welcome!' });
   });
 
 /*

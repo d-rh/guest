@@ -37,10 +37,10 @@ app.use('/static', express.static('public'));
 /*
 |  Routes
 */
-app.use((req, res, next) => {
-  console.log('TITS TITS TITS TITS TITS TITS TITS TITS TITS TITS ');
-  next();
-});
+// app.use((req, res, next) => {
+//   console.log('TITS TITS TITS TITS TITS TITS TITS TITS TITS TITS ');
+//   next();
+// });
 
 // homepage
 app.get('/', (req, res) => {
@@ -63,13 +63,17 @@ app.route('/login')
   .post((req, res) => {
     authController.verifyLogin(req.body)
       .then((result) => {
-        res.render('welcome', { title: 'Welcome!', result });
+        if (result['_id']) {
+          res.render('welcome', { title: 'Welcome!', result })
+        } else if (result === 'Incorrect Password' || 'Incorrect username') {
+          console.error(result)
+          res.render('login', { title: result, result });
+        }
       })
       .catch((err) => {
         console.error(err.stack);
         res.status(500).send(err.stack);
       });
-    // user.then(sessController.createSession)
   });
 
 /*

@@ -1,12 +1,9 @@
-// controllers/authController.js
+// ~/controllers/authController.js
 
 const Friend = require('../models/friend');
 const sessionController = require('./sessionController')
 
 exports.verifyLogin = user => new Promise((resolve, reject) => {
-  
-  const INCORRECT_PW = "Incorrect password";
-  const INCORRECT_USER = "Incorrect username";
 
   Friend.findOne({ username: user.username }, (err, match) => {
     if (err) reject(err);
@@ -16,21 +13,13 @@ exports.verifyLogin = user => new Promise((resolve, reject) => {
         if (isMatch) {
           return sessionController.sessionCreatePost()
             .then((result) => {
-              resolve(result)
+              resolve(result);
             })
         }
-
-        resolve({
-          result: INCORRECT_PW
-        });
+        resolve('Incorrect password');
       });
-
     } else {
-
-      resolve({
-        result: INCORRECT_USER
-      });
-
+      resolve('Incorrect username');
     }
   });
 });

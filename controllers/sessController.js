@@ -1,6 +1,6 @@
 const Session = require('../models/session');
 
-exports.sessionCreatePost = (user) => {
+exports.sessionCreatePost = user => new Promise( (resolve, reject) => {
   // mongoDB generates _id field when a new
   // document is inserted and it omits
   // the _id field
@@ -15,4 +15,6 @@ exports.sessionCreatePost = (user) => {
     .catch((err) => {
       console.error(err);
     });
-};
+
+  resolve(session)
+});

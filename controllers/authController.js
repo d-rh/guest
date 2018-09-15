@@ -1,7 +1,7 @@
 // controllers/authController.js
 
 const Friend = require('../models/friend');
-const sessController = require('./sessController')
+const sessionController = require('./sessionController')
 
 exports.verifyLogin = user => new Promise((resolve, reject) => {
   
@@ -14,7 +14,7 @@ exports.verifyLogin = user => new Promise((resolve, reject) => {
       match.comparePassword(user.password, (err, isMatch) => {
         if (err) reject(err);
         if (isMatch) {
-          return sessController.sessionCreatePost()
+          return sessionController.sessionCreatePost()
             .then((result) => {
               resolve(result)
             })
@@ -30,7 +30,7 @@ exports.verifyLogin = user => new Promise((resolve, reject) => {
       resolve({
         result: INCORRECT_USER
       });
-      
+
     }
   });
 });

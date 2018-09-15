@@ -1,13 +1,13 @@
 const mongoose = require('mongoose');
-
-
 const Schema = mongoose.Schema;
 
-// ObjectId         = mongoose.Types.ObjectId
-
-
-module.exports = mongoose.model('Session', new Schema(
+const sessionSchema = new Schema(
   {
+    answer: {String}
+  },
+  {  
     timestamps: true,
   },
-));
+);
+
+module.exports = mongoose.model('Session', sessionSchema);

@@ -2,8 +2,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
-const session = require('express-session');
-const MongoStore = require('connect-mongo')(session);
 
 const app = express();
 
@@ -13,8 +11,7 @@ require('dotenv').config();
 |  Connect DB
 */
 mongoose.set('useCreateIndex', true);
-mongoose
-  .connect(
+mongoose.connect(
     process.env.DB_URI,
     { useNewUrlParser: true },
   )
@@ -31,14 +28,6 @@ app.set('view engine', 'pug');
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-// app.use(
-//   session({
-//     store: new MongoStore({ mongooseConnection: mongoose.connection }),
-//     secret: process.env.SESS_SECRET,
-//     resave: false,
-//     saveUninitialized: false,
-//   }),
-// );
 
 /*
 |  Static Path
@@ -48,7 +37,6 @@ app.use('/static', express.static('public'));
 /*
 |  Routes
 */
-
 app.use((req, res, next) => {
   console.log('TITS TITS TITS TITS TITS TITS TITS TITS TITS TITS ');
   next();
@@ -56,16 +44,10 @@ app.use((req, res, next) => {
 
 // homepage
 app.get('/', (req, res) => {
-  // if (req.session.views) {
-  //   req.session.views += 1;
-  // } else {
-  //   req.session.views = 1;
-  // }
   res.render('index', { title: 'Rockwell Guestbook' });
 });
 // register new user
-app
-  .route('/register')
+app.route('/register')
   .get((req, res) => {
     res.render('register', { title: 'Register' });
   })
@@ -74,14 +56,12 @@ app
     res.render('welcome');
   });
 // login
-app
-  .route('/login')
+app.route('/login')
   .get((req, res) => {
     res.render('login', { title: 'Log In' });
   })
   .post((req, res) => {
-    authController
-      .verifyLogin(req.body)
+    authController.verifyLogin(req.body)
       .then((result) => {
         res.render('welcome', { title: 'Welcome!', result });
       })

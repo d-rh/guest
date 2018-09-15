@@ -1,17 +1,16 @@
 // controllers/authController.js
 
-const friend = require('../models/friend.js');
+const Friend = require('../models/friend');
+const sessController = require('./sessController')
 
 exports.verifyLogin = user => new Promise((resolve, reject) => {
-  friend.findOne({ username: user.username }, (err, match) => {
+  Friend.findOne({ username: user.username }, (err, match) => {
     if (err) reject(err);
     if (match) {
       match.comparePassword(user.password, (err, isMatch) => {
         if (err) reject(err);
         if (isMatch) {
-          console.log('authenticated!');
-          console.log(match);
-          resolve({ _id: 'XOXOXOGLAMOURGIRL' });
+          resolve(sessController.sessionCreatePost());
         }
         console.log('Incorrect password.');
         resolve(null);

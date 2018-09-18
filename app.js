@@ -27,6 +27,7 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser())
+app.use('/feed', authController.verifyAuth)
 
 /*
 |  Static Path
@@ -68,7 +69,18 @@ app.route('/login')
   })
   .post((req, res) => {
     authController.verifyLogin(req.body)
-      .then(authController.createSessionId(result))
+      .then(result => {
+        if (result['_id']) {
+            res.cookie('sessId', result['id'], { 
+              maxAge: 1000 * 60 * 60 * 24,
+              httpOnly: true, 
+            });
+            res.render('./feed', { title: 'Welcome!', result })
+          } else if (result === 'Incorrect Password' || 'Incorrect username') {
+            console.error(result)
+            res.render('login', { title: result, result });
+          }
+      })
       .catch((err) => {
         console.error(err.stack);
         res.status(500).send(err.stack);

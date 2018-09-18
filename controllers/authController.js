@@ -25,26 +25,13 @@ exports.verifyLogin = user => new Promise((resolve, reject) => {
   });
 });
 
-exports.createSessionId = result => {
-  if (result['_id']) {
-    res.cookie('sessId', result['id'], { 
-      maxAge: 1000 * 60 * 60 * 24,
-      httpOnly: true, 
-    });
-    res.render('./feed', { title: 'Welcome!', result })
-  } else if (result === 'Incorrect Password' || 'Incorrect username') {
-    console.error(result)
-    res.render('login', { title: result, result });
-  }
-}
-
-exports.verifyAuth = cookie => new Promise((resolve, reject) => {
-  Session.findOne( { sessId: cookie.sessId }, (err, match) => {
+exports.verifyAuth = (req, res, next) => new Promise((resolve, reject) => {
+  Session.findOne( { _id: req.cookies.sessId }, (err, match) => {
     if (err) reject(err);
     if (match) {
-      resolve(cookie);
+      resolve('Logged in!');
     } else {
-      resolve('Please log in')
+      resolve(console.log('Not Logged In'))
     }
   })
 });

@@ -12,7 +12,8 @@ exports.verifyLogin = user => new Promise((resolve, reject) => {
       match.comparePassword(user.password, (err, isMatch) => {
         if (err) reject(err);
         if (isMatch) {
-          return sessionController.sessionCreatePost()
+          console.log(match);
+          return sessionController.sessionCreatePost(match)
             .then((result) => {
               resolve(result);
             })

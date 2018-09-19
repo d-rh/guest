@@ -13,8 +13,7 @@ exports.friendCreatePost = (friend) => {
     password: friend.password,
   });
 
-  user
-    .save()
+  user.save()
     .then((doc) => {
       console.log(doc);
     })

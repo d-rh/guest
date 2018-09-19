@@ -1,13 +1,18 @@
-const mongoose = require('mongoose');
+// ./models/session.js
 
+const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-// ObjectId         = mongoose.Types.ObjectId
+const sessionSchema = new Schema(
+  {
+    username: {type: String, required: true}
+  },
+  {  
+    timestamps: true,
+  },
+);
 
 
-const sessionSchema = new Schema({
-  user: {},
-});
 
 module.exports = mongoose.model('Session', sessionSchema);

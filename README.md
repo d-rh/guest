@@ -1,13 +1,9 @@
-- Encrypt the passwords
-
-  - hashing and matching implemented with bcrypt!
-
 - Make the UI aware that a user is currently authenticated
-
-  - Need to create a session with Session ID, userId, name
-  - any page besides "/" and "/login" should check if there's a session
-    - if there's not a session, redirect them to "/login"
-      - hint: use middleware
+  - Cookie (sessId and username) functioning - authController.verifyAuth()
+    implemented to check cookies for an ID in Mongo DB session collection.
+    This function is buggy:
+    localhost:3005/feed without sessId throws this error:
+    Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client 
 
 - Allow a currently authenticated user to log themselves out
 

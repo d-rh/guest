@@ -27,7 +27,9 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser())
-app.use('/feed', authController.verifyAuth)
+app.use('/feed', (req, res, next) => { 
+  authController.verifyAuth(req, res, next) // this is buggy
+})
 
 /*
 |  Static Path
@@ -37,15 +39,6 @@ app.use('/static', express.static('public'));
 /*
 |  Routes
 */
-
-app.use('/feed', (req, res, next) => {
-  // require auth
-  console.log('Cookies: ' + req.cookies);
-});
-// app.use((req, res, next) => {
-//   console.log('TITS TITS TITS TITS TITS TITS TITS TITS TITS TITS ');
-//   next();
-// });
 
 // homepage
 app.get('/', (req, res) => {
@@ -75,7 +68,11 @@ app.route('/login')
               maxAge: 1000 * 60 * 60 * 24,
               httpOnly: true, 
             });
-            res.render('./feed', { title: 'Welcome!', result })
+            res.cookie('username', result['username'], {
+              maxAge: 1000 * 60 * 60 * 24,
+              httpOnly: true,
+            });
+            res.redirect('/feed')
           } else if (result === 'Incorrect Password' || 'Incorrect username') {
             console.error(result)
             res.render('login', { title: result, result });
@@ -88,6 +85,10 @@ app.route('/login')
   });
 
 // feed
+app.route('/feed')
+  .get((req, res) => {
+    res.render('feed')
+  })
 
 /*
 |  Error Handlers

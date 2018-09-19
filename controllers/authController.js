@@ -12,7 +12,6 @@ exports.verifyLogin = user => new Promise((resolve, reject) => {
       match.comparePassword(user.password, (err, isMatch) => {
         if (err) reject(err);
         if (isMatch) {
-          console.log(match);
           return sessionController.sessionCreatePost(match)
             .then((result) => {
               resolve(result);
@@ -26,13 +25,18 @@ exports.verifyLogin = user => new Promise((resolve, reject) => {
   });
 });
 
+// buggy
 exports.verifyAuth = (req, res, next) => new Promise((resolve, reject) => {
+  console.log(req.cookies.sessId);
+  if (!req.cookies.sessId) {
+    res.redirect('/login');
+  }
   Session.findOne( { _id: req.cookies.sessId }, (err, match) => {
     if (err) reject(err);
     if (match) {
-      resolve('Logged in!');
+      resolve(next());
     } else {
-      resolve(console.log('Not Logged In'))
+      reject(res.redirect('login'));
     }
   })
 });

@@ -7,7 +7,7 @@ exports.sessionCreatePost = match => new Promise( (resolve, reject) => {
   // document is inserted and it omits
   // the _id field
   const session = new Session({
-    first_name: match.first_name
+    username: match.username
   });
 
   session.save()

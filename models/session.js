@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 
 const sessionSchema = new Schema(
   {
-    first_name: {type: String, required: true}
+    username: {type: String, required: true}
   },
   {  
     timestamps: true,

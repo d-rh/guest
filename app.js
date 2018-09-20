@@ -28,7 +28,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser())
 app.use('/feed', (req, res, next) => { 
-  authController.verifyAuth(req, res, next) // this is buggy
+  authController.verifyAuth(req, res, next)
     .then(result => {
       if (result === 'Authorized') next();
       else if (result === 'Not authenticated') { res.redirect('/login') }

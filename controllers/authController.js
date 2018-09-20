@@ -25,7 +25,6 @@ exports.verifyLogin = user => new Promise((resolve, reject) => {
   });
 });
 
-// buggy
 exports.verifyAuth = (req, res, next) => new Promise((resolve, reject) => {
   if (!req.cookies.sessId) {
     console.log('halt! not logged in.')

@@ -27,16 +27,21 @@ exports.verifyLogin = user => new Promise((resolve, reject) => {
 
 // buggy
 exports.verifyAuth = (req, res, next) => new Promise((resolve, reject) => {
-  console.log(req.cookies.sessId);
   if (!req.cookies.sessId) {
-    res.redirect('/login');
+    console.log('halt! not logged in.')
+    resolve(res.redirect('/login'));
+    return;
   }
   Session.findOne( { _id: req.cookies.sessId }, (err, match) => {
-    if (err) reject(err);
-    if (match) {
-      resolve(next());
-    } else {
-      reject(res.redirect('login'));
+    try {
+      if (match) {
+        console.log('logged in :)')
+        resolve('Authorized');
+      } else {
+        resolve('Not authenticated');
+      }
+    } catch (err) {
+      reject(err)
     }
   })
 });

@@ -29,7 +29,15 @@ app.use(bodyParser.json());
 app.use(cookieParser())
 app.use('/feed', (req, res, next) => { 
   authController.verifyAuth(req, res, next) // this is buggy
-})
+    .then(result => {
+      if (result === 'Authorized') next();
+      else if (result === 'Not authenticated') { res.redirect('/login') }
+    })
+    .catch((err) => {
+      console.error(err.stack);
+      res.status(500).send(err.stack);
+    });
+});
 
 /*
 |  Static Path
@@ -52,7 +60,7 @@ app.route('/register')
   })
   .post((req, res) => {
     newFriendController.friendCreatePost(req.body);
-    res.render('./welcome');
+    res.render('./');
   });
 
 // login

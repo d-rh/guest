@@ -19,7 +19,12 @@
 
 BUGFIXES PLZ
   - i can register with the same account twice
+    - not anymore!
   - I CAN SIGN UP WITHOUT A FIRST NAME
+    - no more first name, just email
   - I CAN SIGN UP WITHOUT A LAST NAME
+    - no more last name, just email
   - I CAN SIGN UP WITHOUT A PASSWORD?!
+    - not anymore!
   - I CAN SIGN UP WITHOUT A USERNAME?!
+    - not anymore!

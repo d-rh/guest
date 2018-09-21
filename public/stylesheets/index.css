@@ -2,7 +2,6 @@ html {
   margin: 0px;
   padding: 0px;
 }
-
 h1 {
   font-family: "Stylish", sans-serif;
 }
@@ -12,4 +11,9 @@ a {
 }
 p {
   font-family: "Open Sans", sans-serif;
+}
+.header {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
 }

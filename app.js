@@ -64,11 +64,26 @@ app.get('/', (req, res) => {
 // register new user
 app.route('/register')
   .get((req, res) => {
-    res.render('register', { title: 'Register' });
+    res.render('register', { 
+      title: 'Register',
+      username: 'Enter a username',
+      email: 'Enter your email',
+    });
   })
-  .post((req, res) => {
-    newFriendController.friendCreatePost(req.body);
-    res.render('./');
+  .post( async (req, res) => {
+    const valResult = await newFriendController.valReg(req.body);
+    if (valResult.errors.length === 0) {
+      newFriendController.friendCreatePost(req.body);
+      res.render('./');
+    } else {
+      console.log(valResult.errors)
+      res.render('register', {
+        title: 'Register',
+        username: valResult.username,
+        email: valResult.email,
+        errors: valResult.errors
+      });
+    }
   });
 
 // login

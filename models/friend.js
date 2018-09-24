@@ -9,10 +9,9 @@ const bcrypt = require('bcrypt');
 
 const friendSchema = new Schema(
   {
-    first_name: { type: String, required: true, max: 50 },
-    last_name: { type: String, requried: true, max: 100 },
     username: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true }
   },
   {
     timestamps: true,

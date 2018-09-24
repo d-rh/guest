@@ -1,11 +1,8 @@
 - Make the UI aware that a user is currently authenticated
-  - Cookie (sessId and username) functioning - authController.verifyAuth()
-    implemented to check cookies for an ID in Mongo DB session collection.
-    This function is buggy:
-    localhost:3005/feed without sessId throws this error:
-    Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client 
+  - Needs testing
 
 - Allow a currently authenticated user to log themselves out
+  - Needs testing
 
 - Use bootstrap styling to make shit pretty
 
@@ -15,3 +12,19 @@
 - Support annoymous messages
 - Support messages for users that are logged in.
   - Messages for user that are logged in should show their information
+
+- Authentication stuff
+  - I would like the system to tell me when my registration was successful
+  - I would like the system to tell me when my registration is not successful
+
+BUGFIXES PLZ
+  - i can register with the same account twice
+    - not anymore!
+  - I CAN SIGN UP WITHOUT A FIRST NAME
+    - no more first name, just email
+  - I CAN SIGN UP WITHOUT A LAST NAME
+    - no more last name, just email
+  - I CAN SIGN UP WITHOUT A PASSWORD?!
+    - not anymore!
+  - I CAN SIGN UP WITHOUT A USERNAME?!
+    - not anymore!

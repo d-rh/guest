@@ -1,11 +1,12 @@
 block registration-form
   form(method="post" action="/register")
-    label(for="first_name") first name:
-    input(name="first_name" type="text" id="first_name")
-    label(for="last_name") last name:
-    input(name="last_name" type="text" id="last_name")
     label(for="username") New username:
-    input(name="username" type="text" id="username")
+    input(name="username" type="text" id="username" value=username)
+    label(for="email") Email:
+    input(name="email" type="text" id="email" value=email)
     label(for="password") New password:
     input(name="password" type="password" id="password")
+    label(for="passConf") Confirm password:
+    input(name="passConf" type="password" id="passConf")
     input(type="submit")
+  p #{errors}

@@ -1,12 +1,17 @@
 // includes/login.pug
 
 block login-form
-  form(method="post" action="/login")
-    label(for="username") Username:
-    input(name="username" type="text" id="username")
-    label(for="last_name") Password:
-    input(name="password" type="password" id="password")
-    input(type="submit")
-    br
-    //- pre=JSON.stringify(result);
-  p If this is your first visit, please <a href="/register">register here</a>
+  .container
+    form(method="post" action="/login")
+      .field
+        // label(class="label" for="username") Username:
+        input(class="input" name="username" type="text" id="username" placeholder="Username")
+      .field
+        // label(class="label" for="password") Password:
+        input(class="input" name="password" type="password" id="password" placeholder="Password")
+      .control
+        button(class="button is-primary" type="submit") Submit
+  section(class="section")
+    .container
+      p If this is your first visit, please 
+      a(class="button is-primary is-outlined" href="/register") Register Here

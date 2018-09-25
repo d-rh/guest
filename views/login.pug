@@ -1,6 +1,9 @@
 extends layout
-block header
-  a(class="header__logo" href="/")
-    h1 Rockwell Guestbook
-block content
+block nav
+  include includes/nav.pug
+block main
+  .hero
+    .hero-body
+      h1(class="title") Thanks for visiting!
+      h2(class="subtitle") Please Log In
   include includes/login.pug

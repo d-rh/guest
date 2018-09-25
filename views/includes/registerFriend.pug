@@ -1,12 +1,35 @@
 block registration-form
-  form(method="post" action="/register")
-    label(for="username") New username:
-    input(name="username" type="text" id="username" value=username)
-    label(for="email") Email:
-    input(name="email" type="text" id="email" value=email)
-    label(for="password") New password:
-    input(name="password" type="password" id="password")
-    label(for="passConf") Confirm password:
-    input(name="passConf" type="password" id="passConf")
-    input(type="submit")
-  p #{errors}
+  .container
+    unless (username && email)
+      form(method="post" action="/register")
+        .field
+          label(class="label" for="username") New username:
+          input(class="input" name="username" type="text" id="username" placeholder='Choose a username')
+        .field
+            label(class="label" for="email") Email:
+            input(class="input" name="email" type="text" id="email" placeholder='Enter your email')
+        .field
+            label(class="label" for="password") New password:
+            input(class="input" name="password" type="password" id="password")
+        .field
+            label(class="label" for="passConf") Confirm password:
+            input(class="input" name="passConf" type="password" id="passConf")
+        .control
+          button(class="button is-primary" type="submit") Submit
+    if (username || email)
+      form(method="post" action="/register")
+        .field
+          label(class="label" for="username") New username:
+          input(class="input" name="username" type="text" id="username" value=username)
+        .field
+            label(class="label" for="email") Email:
+            input(class="input" name="email" type="text" id="email" value=email)
+        .field
+            label(class="label" for="password") New password:
+            input(class="input" name="password" type="password" id="password")
+        .field
+            label(class="label" for="passConf") Confirm password:
+            input(class="input" name="passConf" type="password" id="passConf")
+        .control
+          button(class="button is-primary" type="submit") Submit
+    p #{errors}

@@ -27,6 +27,7 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser())
+app.use('/static', express.static('public'));
 
 /*
 | Middleware
@@ -48,11 +49,6 @@ app.use('/', (req, res, next) => {
 })
 
 /*
-|  Static Path
-*/
-app.use('/static', express.static('public'));
-
-/*
 |  Routes
 */
 
@@ -64,17 +60,13 @@ app.get('/', (req, res) => {
 // register new user
 app.route('/register')
   .get((req, res) => {
-    res.render('register', { 
-      title: 'Register',
-      username: 'Enter a username',
-      email: 'Enter your email',
-    });
+    res.render('register', { title: 'Register' });
   })
   .post( async (req, res) => {
     const valResult = await newFriendController.valReg(req.body);
     if (valResult.errors.length === 0) {
-      newFriendController.friendCreatePost(req.body);
-      res.render('./');
+      newFriendController.friendCreatePost(req.body)
+      res.redirect('./');
     } else {
       console.log(valResult.errors)
       res.render('register', {
@@ -103,7 +95,7 @@ app.route('/login')
               maxAge: 1000 * 60 * 60 * 24,
               httpOnly: true,
             });
-            res.redirect('/feed')
+            res.redirect('/feed', { title: 'Welcome!' })
           } else if (result === 'Incorrect Password' || 'Incorrect username') {
             console.error(result)
             res.render('login', { title: result, result });
@@ -123,7 +115,7 @@ app.route('/feed')
 
 // logout
 app.route('/logout')
-  .post((req, res) => {
+  .get((req, res) => {
     res.clearCookie('sessId');
     res.clearCookie('username');
     res.redirect('/');

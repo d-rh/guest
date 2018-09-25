@@ -1,0 +1,15 @@
+block nav
+  - let user;
+  - user=username;
+  nav(id="navbar" class="navbar has-shadow is-spaced")
+    .container
+      .navbar-brand
+        a(class="navbar-item" href="/")
+          img(src="./static/assets/rockwellguest-logo-nav-brand.png")
+      .navbar-menu  
+        unless user
+          .navbar-item
+            a(class="navbar-item" href="/login") Log In
+        if user
+          a(class="navbar-item" href="feed") Check In
+          a(class="navbar-item" href="logout") Log Out

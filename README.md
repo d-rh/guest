@@ -4,7 +4,7 @@
 - Allow a currently authenticated user to log themselves out
   - Needs testing
 
-- Use bootstrap styling to make shit pretty
+- Begin using Bulma to make shit pretty 
 
 - Show list of other users that have logged in
 
@@ -15,7 +15,9 @@
 
 - Authentication stuff
   - I would like the system to tell me when my registration was successful
+	- This is the next step!
   - I would like the system to tell me when my registration is not successful
+	- This is handled with validateRegistration
 
 BUGFIXES PLZ
   - i can register with the same account twice

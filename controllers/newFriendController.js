@@ -39,8 +39,7 @@ exports.valReg = async (friend) => {
 
 exports.friendCreatePost = (friend) => {
   // mongoDB generates _id field when a new
-  // document is inserted and it omits
-  // the _id field
+  // document is saved without an id field
   const user = new Friend({
     username: friend.username,
     email: friend.email,
@@ -49,9 +48,14 @@ exports.friendCreatePost = (friend) => {
 
   user.save()
     .then((doc) => {
-      console.log(doc);
+      resolve(registerSuccess(doc));
     })
     .catch((err) => {
       console.error(err);
     });
 };
+
+const registerSuccess = (doc) => {
+  console.log(doc);
+  return 'You\'re registered, please log in!'
+}

@@ -5,6 +5,7 @@
   - Needs testing
 
 - Use bootstrap styling to make shit pretty
+  - Used bulma
 
 - Show list of other users that have logged in
 
@@ -15,7 +16,11 @@
 
 - Authentication stuff
   - I would like the system to tell me when my registration was successful
+    - Need a success page
+
   - I would like the system to tell me when my registration is not successful
+    - Currently this is buggy - on registerRetry, it's possible to have a "successful" registration
+    that makes the db scream. I don't know why valReg isn't being called when POSTing from registerRetry
 
 BUGFIXES PLZ
   - i can register with the same account twice

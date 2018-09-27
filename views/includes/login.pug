@@ -13,5 +13,9 @@ block login-form
         button(class="button is-primary" type="submit") Submit
   section(class="section")
     .container
+      if result === 'Not Authenticated'
+        p Incorrect Username or Password!
+  section(class="section")
+    .container
       p If this is your first visit, please 
       a(class="button is-primary is-outlined" href="/register") Register Here

@@ -16,8 +16,8 @@ mongoose.connect(process.env.DB_URI, { useNewUrlParser: true })
   .then(console.log('Successfully connected to MongoDB'))
   .catch(err => console.log(err));
 
-const newFriendController = require('./controllers/newFriendController');
-const authController = require('./controllers/authController');
+const newFriendController = require('../controllers/newFriendController');
+const authController = require('../controllers/authController');
 
 /*
 |  Config
@@ -71,8 +71,8 @@ app.route('/register')
       console.log(valResult.errors)
       res.render('register', {
         title: 'Register',
-        username: valResult.username,
-        email: valResult.email,
+        renderUserName: valResult.formUserName,
+        renderEmail: valResult.email,
         errors: valResult.errors
       });
     }
@@ -87,19 +87,20 @@ app.route('/login')
     authController.verifyLogin(req.body)
       .then(result => {
         if (result['_id']) {
-            res.cookie('sessId', result['id'], { 
-              maxAge: 1000 * 60 * 60 * 24,
-              httpOnly: true, 
-            });
-            res.cookie('username', result['username'], {
-              maxAge: 1000 * 60 * 60 * 24,
-              httpOnly: true,
-            });
-            res.redirect('/feed', { title: 'Welcome!' })
-          } else if (result === 'Incorrect Password' || 'Incorrect username') {
-            console.error(result)
-            res.render('login', { title: result, result });
-          }
+          res.cookie('sessId', result['id'], { 
+            maxAge: 1000 * 60 * 60 * 24,
+            httpOnly: true, 
+          });
+          res.cookie('username', result['username'], {
+            maxAge: 1000 * 60 * 60 * 24,
+            httpOnly: true,
+          });
+          res.redirect('/feed', { title: 'Welcome!' })
+        } 
+        else if (result === 'Not Authenticated') {
+          console.error(result)
+          res.render('login', { title: 'Log In', result });
+        }
       })
       .catch((err) => {
         console.error(err.stack);

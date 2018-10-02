@@ -2,16 +2,20 @@
 
 block login-form
   .container
-    form(method="post" action="/login")
-      .field
-        // label(class="label" for="username") Username:
-        input(class="input" name="username" type="text" id="username" placeholder="Username")
-      .field
-        // label(class="label" for="password") Password:
-        input(class="input" name="password" type="password" id="password" placeholder="Password")
-      .control
-        button(class="button is-primary" type="submit") Submit
-  section(class="section")
-    .container
-      p If this is your first visit, please 
-      a(class="button is-primary is-outlined" href="/register") Register Here
+    section(class="section")
+      form(method="post" action="/login")
+        .field
+          // label(class="label" for="username") Username:
+          input(class="input" name="username" type="text" id="username" placeholder="Username")
+        .field
+          // label(class="label" for="password") Password:
+          input(class="input" name="password" type="password" id="password" placeholder="Password")
+        .control
+          button(class="button is-primary" type="submit") Submit
+      br
+      if result === 'Not Authenticated'
+        div(class="notification is-warning")
+          p Incorrect Username or Password!
+    section(class="section")
+        p If this is your first visit, please 
+        a(class="button is-primary is-outlined" href="/register") Register Here

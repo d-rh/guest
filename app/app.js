@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const url = require('url');
 
 const app = express();
 
@@ -16,8 +17,8 @@ mongoose.connect(process.env.DB_URI, { useNewUrlParser: true })
   .then(console.log('Successfully connected to MongoDB'))
   .catch(err => console.log(err));
 
-const newFriendController = require('./controllers/newFriendController');
-const authController = require('./controllers/authController');
+const newFriendController = require('../controllers/newFriendController');
+const authController = require('../controllers/authController');
 
 /*
 |  Config
@@ -36,17 +37,26 @@ app.use('/feed', (req, res, next) => {
   authController.verifyAuth(req, res, next)
     .then(result => {
       if (result === 'Authorized') next();
-      else if (result === 'Not authenticated') { res.redirect('/login') }
+      else if (result === 'Not authenticated') { 
+        res.redirect(url.format({
+          pathname: "/login"
+        }))
+      }
     })
     .catch((err) => {
       console.error(err.stack);
       res.status(500).send(err.stack);
     });
 });
-app.use('/', (req, res, next) => {
-  if (req.cookies.username) res.locals.username = req.cookies.username;
-  next();
-})
+// app.use('/', async (req, res, next) => {
+//   authController.verifyAuth(req, res, next)
+//   .then(() => { 
+//     if (req.cookies.username) {
+//       res.locals.username = req.cookies.username
+//     }
+//   })
+//   .then(next());
+// })
 
 /*
 |  Routes
@@ -66,13 +76,13 @@ app.route('/register')
     const valResult = await newFriendController.valReg(req.body);
     if (valResult.errors.length === 0) {
       newFriendController.friendCreatePost(req.body)
-      res.redirect('./');
+      res.render('index');
     } else {
       console.log(valResult.errors)
       res.render('register', {
         title: 'Register',
-        username: valResult.username,
-        email: valResult.email,
+        renderUserName: valResult.formUserName,
+        renderEmail: valResult.email,
         errors: valResult.errors
       });
     }
@@ -87,19 +97,22 @@ app.route('/login')
     authController.verifyLogin(req.body)
       .then(result => {
         if (result['_id']) {
-            res.cookie('sessId', result['id'], { 
-              maxAge: 1000 * 60 * 60 * 24,
-              httpOnly: true, 
-            });
-            res.cookie('username', result['username'], {
-              maxAge: 1000 * 60 * 60 * 24,
-              httpOnly: true,
-            });
-            res.redirect('/feed', { title: 'Welcome!' })
-          } else if (result === 'Incorrect Password' || 'Incorrect username') {
-            console.error(result)
-            res.render('login', { title: result, result });
-          }
+          res.cookie('sessId', result['id'], { 
+            maxAge: 1000 * 60 * 60 * 24,
+            httpOnly: true, 
+          });
+          res.cookie('username', result['username'], {
+            maxAge: 1000 * 60 * 60 * 24,
+            httpOnly: true,
+          });
+          res.redirect(url.format({
+            pathname: "/feed"
+          }))
+        } 
+        else if (result === 'Not Authenticated') {
+          console.error(result)
+          res.render('login', { title: 'Log In', result });
+        }
       })
       .catch((err) => {
         console.error(err.stack);
@@ -115,10 +128,10 @@ app.route('/feed')
 
 // logout
 app.route('/logout')
-  .get((req, res) => {
-    res.clearCookie('sessId');
-    res.clearCookie('username');
-    res.redirect('/');
+  .get( async (req, res) => {
+    await res.clearCookie('sessId');
+    await res.clearCookie('username');
+    res.render('index');
   })
 
 /*

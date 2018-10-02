@@ -17,10 +17,10 @@ exports.verifyLogin = user => new Promise((resolve, reject) => {
               resolve(result);
             })
         }
-        resolve('Incorrect password');
+        resolve('Not Authenticated');
       });
     } else {
-      resolve('Incorrect username');
+      resolve('Not Authenticated');
     }
   });
 });

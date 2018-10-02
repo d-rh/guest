@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "a guestbook",
   "repository": "https://github.com/d-rh/guest",
-  "main": "./app.js",
+  "main": "./app/app.js",
   "author": "derek hammitt",
   "license": "ISC",
   "dependencies": {

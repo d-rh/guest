@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const url = require('url');
 
 const app = express();
 
@@ -36,17 +37,26 @@ app.use('/feed', (req, res, next) => {
   authController.verifyAuth(req, res, next)
     .then(result => {
       if (result === 'Authorized') next();
-      else if (result === 'Not authenticated') { res.redirect('/login') }
+      else if (result === 'Not authenticated') { 
+        res.redirect(url.format({
+          pathname: "/login"
+        }))
+      }
     })
     .catch((err) => {
       console.error(err.stack);
       res.status(500).send(err.stack);
     });
 });
-app.use('/', (req, res, next) => {
-  if (req.cookies.username) res.locals.username = req.cookies.username;
-  next();
-})
+// app.use('/', async (req, res, next) => {
+//   authController.verifyAuth(req, res, next)
+//   .then(() => { 
+//     if (req.cookies.username) {
+//       res.locals.username = req.cookies.username
+//     }
+//   })
+//   .then(next());
+// })
 
 /*
 |  Routes
@@ -66,7 +76,7 @@ app.route('/register')
     const valResult = await newFriendController.valReg(req.body);
     if (valResult.errors.length === 0) {
       newFriendController.friendCreatePost(req.body)
-      res.redirect('./');
+      res.render('index');
     } else {
       console.log(valResult.errors)
       res.render('register', {
@@ -95,7 +105,9 @@ app.route('/login')
             maxAge: 1000 * 60 * 60 * 24,
             httpOnly: true,
           });
-          res.redirect('/feed', { title: 'Welcome!' })
+          res.redirect(url.format({
+            pathname: "/feed"
+          }))
         } 
         else if (result === 'Not Authenticated') {
           console.error(result)
@@ -116,10 +128,10 @@ app.route('/feed')
 
 // logout
 app.route('/logout')
-  .get((req, res) => {
-    res.clearCookie('sessId');
-    res.clearCookie('username');
-    res.redirect('/');
+  .get( async (req, res) => {
+    await res.clearCookie('sessId');
+    await res.clearCookie('username');
+    res.render('index');
   })
 
 /*

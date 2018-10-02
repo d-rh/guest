@@ -4,3 +4,6 @@ block main
     include includes/registerFriend.pug
   if (errors)
     include includes/registerRetry.pug
+    div(class="notification is-danger")
+      each error in errors
+        p= error

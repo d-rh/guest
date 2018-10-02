@@ -5,7 +5,6 @@ const Friend = require('../models/friend');
 exports.valReg = async (req) => {
   let errors = [];
   let formUserName = req.formUserName;
-  console.log(formUserName)
   let email = req.email;
   let password = req.password;
   let passConf = req.passConf;
@@ -16,7 +15,7 @@ exports.valReg = async (req) => {
   if (errors.length === 0) {
     await Friend.findOne({ username: req.formUserName}, (err, match) => {
       try {
-        if (match) errors.push('A user with this username already exists!');
+        if (match) errors.push('Another user with this username already exists!');
       } catch (err) {
         errors.push(err)
       }
@@ -29,7 +28,6 @@ exports.valReg = async (req) => {
       }
     });
   }
-  // console.log(errors);
   return {
     formUserName: formUserName,
     email: email,

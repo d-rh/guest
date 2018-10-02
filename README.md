@@ -5,7 +5,7 @@
   - Needs testing
 
 - Use bootstrap styling to make shit pretty
-  - Used bulma
+  - Use bulma
 
 - Show list of other users that have logged in
 

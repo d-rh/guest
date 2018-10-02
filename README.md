@@ -16,11 +16,10 @@
 
 - Authentication stuff
   - I would like the system to tell me when my registration was successful
-    - Need a success page
+  - Need a success page
 
   - I would like the system to tell me when my registration is not successful
-    - Currently this is buggy - on registerRetry, it's possible to have a "successful" registration
-    that makes the db scream. I don't know why valReg isn't being called when POSTing from registerRetry
+	  - This is the next step!
 
 BUGFIXES PLZ
   - i can register with the same account twice

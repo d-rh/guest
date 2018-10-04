@@ -48,14 +48,10 @@ app.use('/feed', (req, res, next) => {
       res.status(500).send(err.stack);
     });
 });
-// app.use('/', async (req, res, next) => {
-//   authController.verifyAuth(req, res, next)
-//   .then(() => { 
-//     if (req.cookies.username) {
-//       res.locals.username = req.cookies.username
-//     }
-//   })
-//   .then(next());
+// app.use('/', (req, res, next) => {
+//   if (req.cookies.username) {
+//     res.locals.username = req.cookies.username
+//   }
 // })
 
 /*

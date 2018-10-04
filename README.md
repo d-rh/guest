@@ -1,5 +1,5 @@
 - Make the UI aware that a user is currently authenticated
-  - Needs testing
+  - Not working properly - handling asyncronicity in verify auth and passing locals to template?
 
 - Allow a currently authenticated user to log themselves out
   - Needs testing
@@ -7,20 +7,16 @@
 - Use bootstrap styling to make shit pretty
   - Use bulma
 
+TODO:
 - Show list of other users that have logged in
-
 - Post to message board
 - Support annoymous messages
 - Support messages for users that are logged in.
   - Messages for user that are logged in should show their information
-
 - Authentication stuff
   - I would like the system to tell me when my registration was successful
-    - Need a success page
-
   - I would like the system to tell me when my registration is not successful
-    - Currently this is buggy - on registerRetry, it's possible to have a "successful" registration
-    that makes the db scream. I don't know why valReg isn't being called when POSTing from registerRetry
+    - This needs testing
 
 BUGFIXES PLZ
   - i can register with the same account twice

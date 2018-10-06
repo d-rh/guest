@@ -22,6 +22,11 @@ PUG STUFF:
 - re-useable includes
   - single registerFriend.pug form that renders placeholder or user-entered username/email!
 
+- Need a success page
+
+- I would like the system to tell me when my registration is not successful
+	- This is the next step!
+
 BUGFIXES PLZ
   - i can register with the same account twice
     - not anymore!

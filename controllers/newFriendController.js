@@ -13,6 +13,7 @@ exports.valReg = async (req) => {
   if (password.length < 5) errors.push('Please enter at least five characters for a password');
   if (password != passConf) errors.push('Please ensure Password and Password Confirmation match');
   if (errors.length === 0) {
+    console.log('flag 1')
     await Friend.findOne({ username: req.formUserName}, (err, match) => {
       try {
         if (match) errors.push('Another user with this username already exists!');
@@ -20,6 +21,7 @@ exports.valReg = async (req) => {
         errors.push(err)
       }
     });
+    console.log('flag 2')
     await Friend.findOne({ email: req.email}, (err, match) => {
       try {
         if (match) errors.push('A user with this email address already exists!');
@@ -45,9 +47,9 @@ exports.friendCreatePost = (friend) => {
     password: friend.password,
   });
 
-  user.save()
+  return user.save()
     .then((doc) => {
-      resolve(registerSuccess(doc));
+      return registerSuccess(doc);
     })
     .catch((err) => {
       console.error(err);

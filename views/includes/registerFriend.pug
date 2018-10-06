@@ -3,10 +3,12 @@ block registration-form
     form(method="post" action="/register")
       .field
         label(class="label" for="formUserName") New username:
-        input(class="input" name="formUserName" type="text" id="formUserName" placeholder="Choose a username")
+        input(class="input" name="formUserName" type="text" id="formUserName" 
+        value=renderUserName ? renderUserName : "" placeholder="Choose a username")
       .field
         label(class="label" for="email") Email:
-        input(class="input" name="email" type="text" id="email" placeholder='Enter your email')
+        input(class="input" name="email" type="text" id="email" 
+        value=renderEmail ? renderEmail : "" placeholder='Enter your email')
       .field
         label(class="label" for="password") New password:
         input(class="input" name="password" type="password" id="password")

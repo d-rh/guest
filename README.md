@@ -18,6 +18,10 @@ TODO:
   - I would like the system to tell me when my registration is not successful
     - This needs testing
 
+PUG STUFF:
+- re-useable includes
+  - single registerFriend.pug form that renders placeholder or user-entered username/email!
+
 BUGFIXES PLZ
   - i can register with the same account twice
     - not anymore!

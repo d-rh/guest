@@ -72,9 +72,11 @@ app.route('/register')
     const valResult = await newFriendController.valReg(req.body);
     if (valResult.errors.length === 0) {
       newFriendController.friendCreatePost(req.body)
-      res.render('index');
+      .then(() => {
+        res.render('index');  
+      })
     } else {
-      console.log(valResult.errors)
+      console.log(valResult)
       res.render('register', {
         title: 'Register',
         renderUserName: valResult.formUserName,

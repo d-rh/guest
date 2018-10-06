@@ -48,14 +48,10 @@ app.use('/feed', (req, res, next) => {
       res.status(500).send(err.stack);
     });
 });
-// app.use('/', async (req, res, next) => {
-//   authController.verifyAuth(req, res, next)
-//   .then(() => { 
-//     if (req.cookies.username) {
-//       res.locals.username = req.cookies.username
-//     }
-//   })
-//   .then(next());
+// app.use('/', (req, res, next) => {
+//   if (req.cookies.username) {
+//     res.locals.username = req.cookies.username
+//   }
 // })
 
 /*
@@ -76,9 +72,11 @@ app.route('/register')
     const valResult = await newFriendController.valReg(req.body);
     if (valResult.errors.length === 0) {
       newFriendController.friendCreatePost(req.body)
-      res.render('index');
+      .then(() => {
+        res.render('index');  
+      })
     } else {
-      console.log(valResult.errors)
+      console.log(valResult)
       res.render('register', {
         title: 'Register',
         renderUserName: valResult.formUserName,

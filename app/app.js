@@ -127,8 +127,7 @@ app.route('/feed')
 // logout
 app.route('/logout')
   .get( async (req, res) => {
-    await res.clearCookie('sessId');
-    await res.clearCookie('username');
+    authController.logOut(req.body)
     res.render('index');
   })
 

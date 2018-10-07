@@ -47,16 +47,13 @@ exports.friendCreatePost = (friend) => {
     password: friend.password,
   });
 
-  return user.save()
+  user.save()
     .then((doc) => {
-      return registerSuccess(doc);
+      console.log(doc)
+      return doc;
     })
     .catch((err) => {
       console.error(err);
+      return err;
     });
 };
-
-const registerSuccess = (doc) => {
-  console.log(doc);
-  return 'You\'re registered, please log in!'
-}

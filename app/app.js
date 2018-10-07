@@ -19,6 +19,7 @@ mongoose.connect(process.env.DB_URI, { useNewUrlParser: true })
 
 const newFriendController = require('../controllers/newFriendController');
 const authController = require('../controllers/authController');
+const sessionController = require('../controllers/sessionController');
 
 /*
 |  Config
@@ -49,10 +50,21 @@ app.use('/feed', (req, res, next) => {
     });
 });
 // app.use('/', (req, res, next) => {
-//   if (req.cookies.username) {
-//     res.locals.username = req.cookies.username
+//   if (req.cookies.sessId) {
+//     sessionController.sessionVerify(req.body)
+//       .then(result => {
+//         if (result === 'Authorized') res.locals.username = req.cookies.username;
+//       })
 //   }
+//   next();
 // })
+app.use('/', (req, res, next) => {
+  if (req.cookies.sessId) {
+    res.locals.username = req.cookies.username;
+  }
+  next();
+})
+
 
 /*
 |  Routes
@@ -127,8 +139,14 @@ app.route('/feed')
 // logout
 app.route('/logout')
   .get( async (req, res) => {
-    authController.logOut(req.body)
-    res.render('index');
+    authController.logOut(req)
+      .then(
+        res.clearCookie('sessId'),
+        res.clearCookie('username')
+      )
+    res.redirect(url.format({
+      pathname: '/'
+    }));
   })
 
 /*

@@ -19,3 +19,20 @@ exports.sessionCreatePost = match => new Promise( (resolve, reject) => {
     resolve(session)
 });
 
+exports.sessionVerify = (req) => new Promise ( (resolve, reject) => {
+  const sessionId = req.cookies.sessId;
+  const user = req.cookies.user;
+  const AUTHORIZED = 'Logged In'
+  const UNAUTHORIZED = 'Not Logged In'
+  const FAILURE = 'ERROR'
+
+  Session.findOne({_id: sessionId}, (err, match) => {
+    try {
+      if (match) resolve(AUTHORIZED)
+      else resolve(UNAUTHORIZED);
+    }
+    catch (err) {
+      reject(err)
+    }
+  })
+})

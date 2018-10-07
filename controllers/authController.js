@@ -46,15 +46,14 @@ exports.verifyAuth = (req, res, next) => new Promise((resolve, reject) => {
 });
 
 exports.logOut = (req, res, next) => new Promise((resolve, reject) => {
-  let id = req.cookies.sessId;
-  res.clearCookie('sessId');
-  res.clearCookie('username');
+  const sessionId = req.cookies.sessId;
   try {
-    Session.deleteOne({_id: id})
-    console.log('Session deleted from db!');
-    resolve('Logout success!')
+    Session.find().remove({ _id: sessionId }, () => {
+      console.log('Session deleted from db!');
+      resolve('Logout success!')
+    });
   }
   catch(err) {
-    reject(er)
+    reject(err)
   }
 })

@@ -1,10 +1,24 @@
 extends layout
 block main-content
   .container
+    .guestbook
+      h1 Sign the Guestbook
+        form(method="post" action="/feed")
+          .field
+            lable(class="label" for="newEntry")
+            input(class="input" name="newEntry" type="text" id="newEntry"
+            placeholder="Sign the Guestbook!")
+          .control
+            button(class="button is-primary" type="submit") Sign
+    .entries
     p Wi-Fi Information:
     ul
       li network: Fangorn
       li password: peacelovevelo
     br
     br
-    pre=result
+  if (entries)
+    each entry in entries
+      p=entry.username
+      p=entry.content
+      

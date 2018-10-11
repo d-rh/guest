@@ -1,5 +1,4 @@
 - Make the UI aware that a user is currently authenticated
-  - Not working properly - handling asyncronicity in verify auth and passing locals to template?
 
 - Allow a currently authenticated user to log themselves out
   - Needs testing

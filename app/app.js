@@ -133,16 +133,19 @@ app
 // feed
 app
   .route("/feed")
-  .get(async (req, res) => {
-    await entryController.getRecentEntries().then(entries => {
-      res.render("feed", { entries: entries });
+  .get((req, res) => {
+    entryController.getRecentEntries().then(entries => {
+      res.locals.entries = entries
+      res.redirect(url.format({
+        pathname: "/feed/" + req.cookies.username
+      }));
     });
   })
   .post(async (req, res) => {
     await entryController.entryCreatePost(req).then(
       res.redirect(
         url.format({
-          pathname: "/feed"
+          pathname: "/feed/" + req.cookies.username
         })
       )
     );

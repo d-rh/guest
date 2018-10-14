@@ -19,6 +19,7 @@ block main-content
     br
   if (entries)
     each entry in entries
-      p=entry.username
-      p=entry.content
+      div(class="box")
+        p=entry.username
+        p=entry.content
       

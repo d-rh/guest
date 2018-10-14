@@ -17,9 +17,10 @@ block main-content
       li password: peacelovevelo
     br
     br
-  if (entries)
-    each entry in entries
+  if (guestbook.entries)
+    each entry in guestbook.entries
       div(class="box")
         p=entry.username
         p=entry.content
+        p=entry.date
       

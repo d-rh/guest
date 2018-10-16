@@ -25,7 +25,7 @@ exports.getRecentEntries = async () => {
   try {
     await query.find((err, entries) => {
       entries.forEach(entry => {
-        recentPostCheck(entry.date) ? recentPosts.push(entry) : "";
+        recentPostCheck(entry.date) ? recentPosts.unshift(entry) : "";
       });
     });
   } catch (err) {

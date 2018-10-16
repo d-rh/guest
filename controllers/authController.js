@@ -29,7 +29,6 @@ exports.verifyAuth = (req, res, next) => new Promise((resolve, reject) => {
   if (!req.cookies.sessId) {
     console.log('halt! not logged in.')
     resolve(res.redirect('/login'));
-    return;
   }
   Session.findOne({ _id: req.cookies.sessId }, (err, match) => {
     try {

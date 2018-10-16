@@ -7,10 +7,9 @@ const url = require('url');
 const app = express();
 
 require('dotenv').config();
-
-/*
-|  Connect DB
-*/
+/******************
+|  Connect DB     |
+******************/
 mongoose.set('useCreateIndex', true);
 mongoose.connect(
   process.env.DB_URI,
@@ -21,22 +20,27 @@ mongoose.connect(
 
 const newFriendController = require('../controllers/newFriendController');
 const authController = require('../controllers/authController');
-// const sessionController = require('../controllers/sessionController');
 const entryController = require('../controllers/entryController');
-/*
-|  Config
-*/
+/******************
+|  Config         |
+******************/
 app.use('/static/', express.static('public'));
 app.set('view engine', 'pug');
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
-
-
-/*
-| Middleware
-*/
+/******************
+|  Middleware     |
+******************/
+app.use('/', (req, res, next) => {
+  // if a user is authenticated, pass their username as a local
+  // to the layout view template
+  if (req.cookies.sessId) {
+    res.locals.username = req.cookies.username;
+  }
+  next();
+});
 app.use('/feed', (req, res, next) => {
   authController.verifyAuth(req, res, next)
     .then(result => {
@@ -55,26 +59,12 @@ app.use('/feed', (req, res, next) => {
       res.status(500).send(err.stack);
     });
 });
-app.use('/', (req, res, next) => {
-  if (req.cookies.sessId) {
-    res.locals.username = req.cookies.username;
-  }
-  next();
-});
-
-/*
-|  Routes
-*/
-
-// homepage
-app.get('/', async (req, res) => {
-  if (req.cookies.sessId) {
-    await authController.verifyAuth(req)
-    res.redirect(url.format({
-      pathname: '/feed/' + req.cookies.username
-    }))
-  }
-  res.render('index', { title: 'Rockwell Guestbook' });
+/******************
+|  Routes         |
+******************/
+// index
+app.get('/', async (req, res, next) => {
+  res.render('index');
 });
 
 // register new user
@@ -109,15 +99,16 @@ app.route('/login')
       .then(result => {
         if (result['_id']) {
           res.cookie('sessId', result['id'], {
-            maxAge: 1000 * 60 * 60 * 24,
+            maxAge: 1000 * 60 * 60 * 8,
             httpOnly: true
           });
           res.cookie('username', result['username'], {
+            maxAge: 1000 * 60 * 60 * 8,
             httpOnly: true
           });
           res.redirect(
             url.format({
-              pathname: '/feed'
+              pathname: '/feed/' + req.cookies.username
             })
           );
         } else if (result === 'Not Authenticated') {
@@ -134,13 +125,14 @@ app.route('/login')
 // feed
 app.route('/feed')
   .post(async (req, res) => {
-    await entryController.entryCreatePost(req).then(
-      res.redirect(
-        url.format({
-          pathname: '/feed/' + req.cookies.username
-        })
+    await entryController.entryCreatePost(req)
+      .then(
+        res.redirect(
+          url.format({
+            pathname: '/feed/' + req.cookies.username
+          })
+        )
       )
-    )
   })
   .get(async (req, res) => {
     res.redirect(
@@ -149,21 +141,11 @@ app.route('/feed')
       })
     )
   })
-
 app.get('/feed/:username', async (req, res) => {
-  let guestbook = {}
-  await entryController.getRecentEntries()
-    .then(recentEntries => {
-      guestbook["entries"] = recentEntries;
-      return guestbook
-    })
-    .then(guestbook => {
-      if (guestbook.entries.length) {
-        res.render('feed', { guestbook })
-      }
-    })
+  const recentEntries = await entryController.getRecentEntries()
+  console.log(recentEntries)
+  res.render('feed', { guestbook: recentEntries })
 })
-
 
 // logout
 app.route('/logout')
@@ -177,9 +159,10 @@ app.route('/logout')
     );
   });
 
-/*
-|  Error Handlers
-*/
+
+/******************
+|  Error Handlers |
+******************/
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send(err.stack);

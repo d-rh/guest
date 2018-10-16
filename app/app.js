@@ -66,7 +66,6 @@ app.use('/feed', (req, res, next) => {
 app.get('/', async (req, res, next) => {
   res.render('index');
 });
-
 // register new user
 app.route('/register')
   .get((req, res) => {
@@ -75,20 +74,31 @@ app.route('/register')
   .post(async (req, res) => {
     const valResult = await newFriendController.valReg(req.body);
     if (valResult.errors.length === 0) {
-      newFriendController.friendCreatePost(req.body).then(() => {
-        res.render('index');
-      });
+      await newFriendController.friendCreatePost(req.body).then(result => {
+        return result
+      }).then(regResult => {
+        res.redirect(url.format({
+          pathname: '/register/' + regResult
+        }))
+      })
     } else {
-      console.log(valResult);
       res.render('register', {
         title: 'Register',
         renderUserName: valResult.formUserName,
-        renderEmail: valResult.email,
+        renderFirstName: valResult.firstName,
+        renderLastName: valResult.lastName,
         errors: valResult.errors
       });
     }
   });
-
+app.route('/register/:outcome')
+  .get((req, res) => {
+    if (req.params.outcome === 'success') {
+      console.log(req.params); 
+      res.render('register', { outcome: req.params.outcome })
+    }
+    else if (req.params != 'success') res.render('error')
+  })
 // login
 app.route('/login')
   .get((req, res) => {
@@ -98,6 +108,7 @@ app.route('/login')
     authController.verifyLogin(req.body)
       .then(result => {
         if (result['_id']) {
+          let user = result['username']
           res.cookie('sessId', result['id'], {
             maxAge: 1000 * 60 * 60 * 8,
             httpOnly: true
@@ -108,7 +119,7 @@ app.route('/login')
           });
           res.redirect(
             url.format({
-              pathname: '/feed/' + req.cookies.username
+              pathname: '/feed/' + user
             })
           );
         } else if (result === 'Not Authenticated') {
@@ -121,7 +132,6 @@ app.route('/login')
         res.status(500).send(err.stack);
       });
   });
-
 // feed
 app.route('/feed')
   .post(async (req, res) => {
@@ -142,11 +152,9 @@ app.route('/feed')
     )
   })
 app.get('/feed/:username', async (req, res) => {
-  const recentEntries = await entryController.getRecentEntries()
-  console.log(recentEntries)
+  let recentEntries = await entryController.getRecentEntries()
   res.render('feed', { guestbook: recentEntries })
 })
-
 // logout
 app.route('/logout')
   .get(async (req, res) => {
@@ -158,7 +166,6 @@ app.route('/logout')
       })
     );
   });
-
 
 /******************
 |  Error Handlers |

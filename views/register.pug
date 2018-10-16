@@ -1,6 +1,11 @@
 extends layout
 block main
-  include includes/registerFriend.pug
-  if (errors)
-    each error in errors
-      p= error
+  unless outcome
+    include includes/registerFriend.pug
+    if (errors)
+      each error in errors
+        p= error
+  if outcome
+    p Your registration was successful!
+    br
+    p You may now log in with your new credentials.

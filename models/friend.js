@@ -10,14 +10,14 @@ const bcrypt = require('bcrypt');
 const friendSchema = new Schema(
   {
     username: { type: String, required: true, unique: true },
-    email: { type: String, required: true, unique: true },
+    firstName: { type: String, required: true, unique: true },
+    lastName: { type: String, required: true, unique: true },
     password: { type: String, required: true }
   },
   {
     timestamps: true,
   },
 );
-
 friendSchema.pre('save', function (next) {
   const user = this;
   if (!user.isModified('password')) return next();
@@ -33,15 +33,10 @@ friendSchema.pre('save', function (next) {
     });
   });
 });
-
 friendSchema.methods.comparePassword = function (candidatePassword, cb) {
   bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
     if (err) return cb(err);
     cb(null, isMatch);
   });
 };
-
-// Virtual full name
-friendSchema.virtual('name').get(() => `${this.first_name}, ${this.last_name}`);
-
 module.exports = mongoose.model('Friend', friendSchema);

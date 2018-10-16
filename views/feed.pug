@@ -19,8 +19,11 @@ block main-content
     br
   if (guestbook)
     each entry in guestbook
-      div(class="box")
-        p=entry.username
-        p=entry.content
-        p=entry.date
+      article(class="media")
+        .media-content
+          .content
+            p
+              strong=entry.username
+            p=entry.content
+            p=entry.date
       

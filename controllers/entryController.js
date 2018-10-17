@@ -2,13 +2,13 @@ const Entry = require("../models/entry");
 
 exports.entryCreatePost = entry =>
   new Promise((resolve, reject) => {
-    // console.log(entry);
-    const newEntry = new Entry({
-      username: entry.cookies.username,
-      content: entry.body.newEntry,
-      date: new Date()
-    });
-    newEntry
+    if (entry.body.newEntry) {
+      const newEntry = new Entry({
+        username: entry.cookies.username,
+        content: entry.body.newEntry,
+        date: new Date()
+      });
+      newEntry
       .save()
       .then(doc => {
         resolve(doc);
@@ -17,21 +17,25 @@ exports.entryCreatePost = entry =>
         console.error(err);
       });
     resolve(newEntry);
+    }
+    if (!entry.body.newEntry) {
+      reject('You have to include something in the entry!')
+    }
   });
 
 exports.getRecentEntries = async () => {
   const query = Entry.where({});
-  let recentPosts = [];
+  let recentEntries = [];
   try {
     await query.find((err, entries) => {
       entries.forEach(entry => {
-        recentPostCheck(entry.date) ? recentPosts.unshift(entry) : "";
+        recentPostCheck(entry.date) ? recentEntries.unshift(entry) : "";
       });
     });
   } catch (err) {
     console.error(err);
   }
-  return recentPosts;
+  return recentEntries;
 };
 
 const recentPostCheck = entryDate => {

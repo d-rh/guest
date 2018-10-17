@@ -41,7 +41,7 @@ app.use('/', (req, res, next) => {
   }
   next();
 });
-app.use('/feed', (req, res, next) => {
+app.use('/feed', async (req, res, next) => {
   authController.verifyAuth(req, res, next)
     .then(result => {
       if (result === 'Authorized') {
@@ -57,7 +57,7 @@ app.use('/feed', (req, res, next) => {
     .catch(err => {
       console.error(err.stack);
       res.status(500).send(err.stack);
-    });
+    })
 });
 /******************
 |  Routes         |
@@ -152,8 +152,12 @@ app.route('/feed')
     )
   })
 app.get('/feed/:username', async (req, res) => {
-  let recentEntries = await entryController.getRecentEntries()
-  res.render('feed', { guestbook: recentEntries })
+  await entryController.getRecentEntries()
+    .then(
+      (e) => res.render('feed', { renderEntries: e }),
+      (err) => res.render('error',  { err })
+    )
+  //res.render('feed', { entries: await entryController.getRecentEntries() })
 })
 // logout
 app.route('/logout')

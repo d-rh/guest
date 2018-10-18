@@ -5,7 +5,7 @@ TODO:
 - Show list of other users that have logged in
 - Support annoymous messages
 - Authentication stuff
-  - Couples with this, can clean up registration validation with Regex...
+  - Related to auth stuff: it's possible to clean up registration validation with Regex...
 
 COMPLETED, PENDING TESTS:
 - Make the UI aware that a user is currently authenticated

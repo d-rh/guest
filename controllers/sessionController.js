@@ -36,3 +36,12 @@ exports.sessionVerify = (req) => new Promise ( (resolve, reject) => {
     }
   })
 })
+
+exports.getActiveUsers = (req) => new Promise ( (resolve, reject) => {
+  try {
+    Session.find().then(sessions => resolve(sessions))
+  }
+  catch (err) {
+    reject(err)
+  }
+})

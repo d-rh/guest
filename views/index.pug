@@ -1,3 +1,13 @@
 extends layout
-block main
-  p Sample body content :)
+block main-content
+  section(class="hero is-fullheight")
+    .hero-body
+      .container
+        h1(class="hero-head title") Welcome to our home on Rockwell Avenue 
+        h2(class="hero-body subtitle") &#x1F929; We're glad you're here &#x1F929;
+        div(class="hero-foot")
+          p First Visit? 
+          include includes/registerFriend.pug
+          p You can log in here to sign our guestbook, access our Wi-Fi network, and learn more about our home.
+          p Thanks for coming!
+  

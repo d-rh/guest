@@ -1,11 +1,13 @@
 extends layout
 block main-content
-  .container
-    div(class="tile is-ancestor")
-      div(class="tile is-parent is-vertical")
-        include includes/guestbook.pug
-      div(class="tile is-parent")
-        include includes/activeUsers.pug
-        include includes/networkInfo.pug
+  section(class="hero is-fullheight")
+    .hero-body
+      .container
+        div(class="tile is-ancestor")
+          div(class="tile is-parent is-vertical")
+            include includes/guestbook.pug
+          div(class="tile is-parent is-vertical")
+            include includes/activeUsers.pug
+            include includes/networkInfo.pug
 
       

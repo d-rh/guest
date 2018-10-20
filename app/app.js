@@ -68,7 +68,7 @@ app.get('/', async (req, res, next) => {
   res.render('index');
 });
 app.route('/register')
-  .get((req, res) => {
+  .get((_req, res) => {
     res.render('register', { title: 'Register' });
   })
   .post(async (req, res) => {
@@ -155,12 +155,12 @@ app.route('/feed')
       })
     )
   })
-app.get('/feed/:username', (req, res) => {
+app.get('/feed/:username', (_req, res) => {
   return sessionController.getActiveUsers()
     .then((renderUsers) =>
       entryController.getRecentEntries()
         .then(
-          (renderEntries) => ({ renderUsers, renderEntries })
+          (renderEntries) => ({ renderUsers, renderEntries: renderEntries.reverse() })
         )
     )
     .then((data) => res.render('feed', data))

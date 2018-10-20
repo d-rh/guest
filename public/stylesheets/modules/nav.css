@@ -1,5 +1,10 @@
 .login-form {
   display: inline-flex;
+  padding: 8px 0px 0px 0px;
+}
+
+.login-form .field, .control {
+  margin-left: 0.5rem;
 }
 
 /*# sourceMappingURL=nav.css.map */

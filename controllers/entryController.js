@@ -22,37 +22,38 @@ exports.entryCreatePost = entry =>
       reject('You have to include something in the entry!')
     }
   });
-
 exports.getRecentEntries = () => {
   return new Promise((resolve, reject) => {
-    const query = Entry.where({});
-    let recentEntries = [];
+    const query = Entry.find().limit(10);
+    resolve(query);
+    if (err) reject(err);
+    // const query = Entry.where({});
+    // let recentEntries = [];
 
-    try {
-      return query.find((err, entries) => {
-        if (err) reject(err);
-        console.log("out of database", entries.length);
-        entries.forEach(entry => {
-          recentPostCheck(entry.date) ? recentEntries.unshift(entry) : "";
-        });
-        console.log("post filters", recentEntries.length);
-        resolve(recentEntries);
-      });
-    } catch (err) {
-      console.error(err);
-      reject(err);
-    }
+    // try {
+    //   return query.find((err, entries) => {
+    //     if (err) reject(err);
+    //     console.log("out of database", entries.length);
+    //     entries.forEach(entry => {
+    //       recentPostCheck(entry.date) ? recentEntries.unshift(entry) : "";
+    //     });
+    //     console.log("post filters", recentEntries.length);
+    //     resolve(recentEntries);
+    //   });
+    // } catch (err) {
+    //   console.error(err);
+    //   reject(err);
+    // }
   });
 };
-
-const recentPostCheck = entryDate => {
-  const currentDate = new Date();
-  const currentTime = currentDate.getTime();
-  const entryTime = entryDate.getTime();
-  // last ten days
-  if (currentTime <= entryTime + 864000000) {
-    return true;
-  } else {
-    return false;
-  }
-};
+// const recentPostCheck = entryDate => {
+//   const currentDate = new Date();
+//   const currentTime = currentDate.getTime();
+//   const entryTime = entryDate.getTime();
+//   // last ten days
+//   if (currentTime <= entryTime + 864000000) {
+//     return true;
+//   } else {
+//     return false;
+//   }
+// };

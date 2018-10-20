@@ -3433,6 +3433,7 @@ a.box:active {
 
 .field:not(:last-child) {
   margin-bottom: 0.75rem;
+  margin-left: 0.25rem;
 }
 .field.has-addons {
   display: flex;
@@ -8429,12 +8430,17 @@ label.panel-block:hover {
 }
 
 .footer {
-  background-color: grey;
+  background-color: #cfcfcf;
   padding: 3rem 1.5rem 6rem;
 }
 
 .login-form {
   display: inline-flex;
+  padding: 8px 0px 0px 0px;
+}
+
+.login-form .field, .control {
+  margin-left: 0.5rem;
 }
 
 /*# sourceMappingURL=index.css.map */

@@ -1,6 +1,5 @@
 $body-family: Open Sans;
 $family-sans-serif: Open Sans, sans-serif;
-$footer-background-color: grey;
-@charset "utf-8";
+$footer-background-color: rgb(207, 207, 207);
 @import "../../node_modules/bulma/bulma.sass";
-@import "./modules/nav.scss"; 
+@import "./modules/nav.scss";

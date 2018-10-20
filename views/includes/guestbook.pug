@@ -1,20 +1,20 @@
 div(class="tile is-child")
   .guestbook
-    h1 Sign the Guestbook
-      form(method="post" action="/feed")
-        .field
-          lable(class="label" for="newEntry")
-          input(class="input" name="newEntry" type="text" id="newEntry"
-          placeholder="Sign the Guestbook!")
-        .control
-          button(class="button is-primary" type="submit") Sign
+    form(class="guestbook-form" method="post" action="/feed")
+      .field
+        lable(class="label" for="newEntry")
+        input(class="input" name="newEntry" type="text" id="newEntry"
+        placeholder="Sign the Guestbook!")
+      .control
+        button(class="button is-primary" type="submit") Sign
 div(class="tile is-child")    
+  h2(class="subtitle") Recent Guestbook Entries:
   .entries
     each entry in renderEntries
       article(class="media")
+        figure(class="media-left")
+          strong=entry.username
         .media-content
           .content
-            p
-              strong=entry.username
             p=entry.content
-            p=entry.date
+            p= new Date(entry.date)

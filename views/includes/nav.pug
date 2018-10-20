@@ -1,5 +1,5 @@
 block nav
-  nav(id="navbar" class="navbar has-shadow")
+  nav(id="navbar" class="navbar is-fixed-top has-shadow")
     if user
       .navbar-brand
         a(class="navbar-item" href="/feed")
@@ -27,10 +27,10 @@ block nav
             form(class="login-form" method="post" action="/login")
               .field
                 // label(class="label" for="username") Username:
-                input(class="input" name="username" type="text" id="username" placeholder="Username")
+                input(class="input navbarUsername" name="username" type="text" id="username" placeholder="Username")
               .field
                 // label(class="label" for="password") Password:
-                input(class="input" name="password" type="password" id="password" placeholder="Password")
+                input(class="input navbarPassword" name="password" type="password" id="password" placeholder="Password")
               .control
                 button(class="button is-primary" type="submit") Submit
   script(type="text/javascript" src="../static/lib/navbarBurger.js")

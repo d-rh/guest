@@ -165,22 +165,6 @@ app.get('/feed/:username', (req, res) => {
     )
     .then((data) => res.render('feed', data))
     .catch(err => res.render('error', { err }));
-
-
-  (async () => {
-    let renderUsers = await sessionController.getActiveUsers();
-    let renderEntries = await entryController.getRecentEntries();
-    return {
-      renderUsers,
-      renderEntries
-    }
-  })().then(
-    result => res.render('feed', {
-      renderUsers: result.renderUsers,
-      renderEntries: result.renderEntries
-    }))
-    .catch(err => res.render('error', { err })
-    )
 })
 // ----- LOGOUT -----
 app.route('/logout')

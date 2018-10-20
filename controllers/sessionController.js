@@ -18,13 +18,10 @@ exports.sessionCreatePost = match => new Promise( (resolve, reject) => {
 
     resolve(session)
 });
-
 exports.sessionVerify = (req) => new Promise ( (resolve, reject) => {
   const sessionId = req.cookies.sessId;
-  const user = req.cookies.user;
   const AUTHORIZED = 'Logged In'
   const UNAUTHORIZED = 'Not Logged In'
-  const FAILURE = 'ERROR'
 
   Session.findOne({_id: sessionId}, (err, match) => {
     try {
@@ -36,10 +33,13 @@ exports.sessionVerify = (req) => new Promise ( (resolve, reject) => {
     }
   })
 })
-
-exports.getActiveUsers = (req) => new Promise ( (resolve, reject) => {
+exports.getActiveUsers = () => new Promise ( (resolve, reject) => {
   try {
-    Session.find().then(sessions => resolve(sessions))
+    let now = new Date();
+    let eightHoursAgo = now.setHours(now.getHours() - 8);
+    let filterDate = new Date(eightHoursAgo).toISOString();
+    Session.find({ "createdAt": { $gte: new Date(filterDate) } })
+    .then(sessions => resolve(sessions))
   }
   catch (err) {
     reject(err)

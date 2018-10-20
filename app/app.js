@@ -93,10 +93,10 @@ app.route('/register')
     }
   });
 app.route('/register/:outcome')
-// Register/:outcome renders differently, depending on success or failure
+  // Register/:outcome renders differently, depending on success or failure
   .get((req, res) => {
     if (req.params.outcome === 'success') {
-      console.log(req.params); 
+      console.log(req.params);
       res.render('register', { outcome: req.params.outcome })
     }
     else if (req.params != 'success') res.render('error')
@@ -107,7 +107,7 @@ app.route('/login')
     res.render('login', { title: 'Log In' });
   })
   .post((req, res) => {
-  // On login success, redirects to /feed/:username
+    // On login success, redirects to /feed/:username
     authController.verifyLogin(req.body)
       .then(result => {
         if (result['_id']) {
@@ -148,14 +148,25 @@ app.route('/feed')
       )
   })
   .get(async (req, res) => {
-  // all GET requests to /feed redirect to /feed/:username
+    // all GET requests to /feed redirect to /feed/:username
     res.redirect(
       url.format({
         pathname: '/feed/' + req.cookies.username
       })
     )
   })
-app.get('/feed/:username', async (req, res) => {
+app.get('/feed/:username', (req, res) => {
+  return sessionController.getActiveUsers()
+    .then((renderUsers) =>
+      entryController.getRecentEntries()
+        .then(
+          (renderEntries) => ({ renderUsers, renderEntries })
+        )
+    )
+    .then((data) => res.render('feed', data))
+    .catch(err => res.render('error', { err }));
+
+
   (async () => {
     let renderUsers = await sessionController.getActiveUsers();
     let renderEntries = await entryController.getRecentEntries();
@@ -164,12 +175,12 @@ app.get('/feed/:username', async (req, res) => {
       renderEntries
     }
   })().then(
-    result  => res.render('feed', { 
+    result => res.render('feed', {
       renderUsers: result.renderUsers,
       renderEntries: result.renderEntries
     }))
-  .catch(err => res.render('error',  { err })
-  )
+    .catch(err => res.render('error', { err })
+    )
 })
 // ----- LOGOUT -----
 app.route('/logout')

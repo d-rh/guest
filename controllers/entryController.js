@@ -9,33 +9,40 @@ exports.entryCreatePost = entry =>
         date: new Date()
       });
       newEntry
-      .save()
-      .then(doc => {
-        resolve(doc);
-      })
-      .catch(err => {
-        console.error(err);
-      });
-    resolve(newEntry);
+        .save()
+        .then(doc => {
+          resolve(doc);
+        })
+        .catch(err => {
+          console.error(err);
+        });
+      resolve(newEntry);
     }
     if (!entry.body.newEntry) {
       reject('You have to include something in the entry!')
     }
   });
 
-exports.getRecentEntries = async () => {
-  const query = Entry.where({});
-  let recentEntries = [];
-  try {
-    await query.find((err, entries) => {
-      entries.forEach(entry => {
-        recentPostCheck(entry.date) ? recentEntries.unshift(entry) : "";
+exports.getRecentEntries = () => {
+  return new Promise((resolve, reject) => {
+    const query = Entry.where({});
+    let recentEntries = [];
+
+    try {
+      return query.find((err, entries) => {
+        if (err) reject(err);
+        console.log("out of database", entries.length);
+        entries.forEach(entry => {
+          recentPostCheck(entry.date) ? recentEntries.unshift(entry) : "";
+        });
+        console.log("post filters", recentEntries.length);
+        resolve(recentEntries);
       });
-    });
-  } catch (err) {
-    console.error(err);
-  }
-  return recentEntries;
+    } catch (err) {
+      console.error(err);
+      reject(err);
+    }
+  });
 };
 
 const recentPostCheck = entryDate => {

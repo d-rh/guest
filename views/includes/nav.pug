@@ -1,13 +1,29 @@
 block nav
   nav(id="navbar" class="navbar has-shadow is-spaced")
-    .container
+    if user
+      .navbar-brand
+        a(class="navbar-item" href="/feed")
+          img(src="/static/assets/rockwellguest-logo-nav-brand.png")
+      .navbar-item
+        a(class="navbar-item" href="/logout") Log Out
+    unless user
       .navbar-brand
         a(class="navbar-item" href="/")
           img(src="/static/assets/rockwellguest-logo-nav-brand.png")
-      .navbar-menu
-        unless user
+        a(role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navMenu")
+          span(aria-hidden="true")
+          span(aria-hidden="true")
+          span(aria-hidden="true")
+      div(class="navbar-menu" id="navMenu")
+        .navbar-start
+        .navbar-end
           .navbar-item
-            a(class="navbar-item" href="/login") Log In
-        if user
-          a(class="navbar-item" href="/feed") Check In
-          a(class="navbar-item" href="/logout") Log Out
+            form(class="login-form" method="post" action="/login")
+              .field
+                // label(class="label" for="username") Username:
+                input(class="input" name="username" type="text" id="username" placeholder="Username")
+              .field
+                // label(class="label" for="password") Password:
+                input(class="input" name="password" type="password" id="password" placeholder="Password")
+              .control
+                button(class="button is-primary" type="submit") Submit

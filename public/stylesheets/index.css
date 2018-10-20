@@ -8433,4 +8433,8 @@ label.panel-block:hover {
   padding: 3rem 1.5rem 6rem;
 }
 
+.login-form {
+  display: inline-flex;
+}
+
 /*# sourceMappingURL=index.css.map */

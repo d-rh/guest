@@ -3433,7 +3433,6 @@ a.box:active {
 
 .field:not(:last-child) {
   margin-bottom: 0.75rem;
-  margin-left: 0.25rem;
 }
 .field.has-addons {
   display: flex;
@@ -8430,7 +8429,7 @@ label.panel-block:hover {
 }
 
 .footer {
-  background-color: #cfcfcf;
+  background-color: #fafafa;
   padding: 3rem 1.5rem 6rem;
 }
 

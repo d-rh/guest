@@ -157,8 +157,8 @@ app.route('/feed')
   })
 app.get('/feed/:username', (_req, res) => {
   return sessionController.getActiveUsers()
-    .then((renderUsers) =>
-      entryController.getRecentEntries()
+    .then(
+      (renderUsers) => entryController.getRecentEntries()
         .then(
           (renderEntries) => ({ renderUsers, renderEntries: renderEntries.reverse() })
         )

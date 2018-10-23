@@ -1,21 +1,18 @@
 
 TODO:
-- Post to message board
-  - Need to debug this. Why is render inconsistent?
-- Show list of other users that have logged in
 - Support annoymous messages
 - Authentication stuff
   - Related to auth stuff: it's possible to clean up registration validation with Regex...
+- Edit messages
+- Delete messages
 
 COMPLETED, PENDING TESTS:
+- Show list of other users that have logged in
+- Post to message board
 - Make the UI aware that a user is currently authenticated
-  - Needs testing
 - Allow a currently authenticated user to log themselves out
-  - Needs testing
 - I would like the system to tell me when my registration was successful
-  - Needs testing
 - I would like the system to tell me when my registration is not successful
-  - Needs testing
 - Support messages for users that are logged in.
   - Messages for user that are logged in should show their information
 - re-useable includes

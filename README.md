@@ -7,6 +7,7 @@ TODO:
 - Delete messages
 
 COMPLETED, PENDING TESTS:
+- Reply to Guestbook entries
 - Show list of other users that have logged in
 - Post to message board
 - Make the UI aware that a user is currently authenticated

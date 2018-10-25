@@ -8433,13 +8433,29 @@ label.panel-block:hover {
   padding: 3rem 1.5rem 6rem;
 }
 
-.login-form {
+.nav-login--form {
   display: inline-flex;
   padding: 8px 0px 0px 0px;
 }
 
-.login-form .field, .control {
+.login-form .field, .nav-login--control {
   margin-left: 0.5rem;
+}
+
+.welcome-message {
+  padding-right: 2rem;
+}
+
+.index-registration {
+  padding-top: 0;
+}
+
+.modal-title {
+  flex-grow: 1;
+}
+
+.wifi-button {
+  margin-top: 7px;
 }
 
 /*# sourceMappingURL=index.css.map */

@@ -6,8 +6,17 @@ block main-content
         h1(class="hero-head title") Welcome to our home on Rockwell Avenue 
         h2(class="hero-body subtitle") &#x1F929; We're glad you're here &#x1F929;
         div(class="hero-foot")
-          p First Visit? 
-          include includes/registerFriend.pug
-          p You can log in here to sign our guestbook, access our Wi-Fi network, and learn more about our home.
-          p Thanks for coming!
-  
+    .section
+      div(class="tile is-ancestor")
+        div(class="tile is-parent")
+          div(class="tile is-child is-vertical is-6 welcome-message")
+            p Is this your first visit?
+            br
+            p Register here, and then sign in to leave an entry in the guestbook.
+            br
+            p Thanks for coming!
+            br
+          div(class="tile is-child is-vertical is-6 index-registration")
+            include includes/registerFriend.pug
+            
+    

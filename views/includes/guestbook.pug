@@ -14,7 +14,14 @@ div(class="tile is-child")
       article(class="media")
         figure(class="media-left")
           strong=entry.username
-        .media-content
-          .content
+        div(class="media-content guestbook-entry")
+          div(class="content" id=entry._id)
             p=entry.content
             p= new Date(entry.date)
+            each reply in entry.replies
+              article(class="media")
+                div(class="media-content entry-reply")
+                  p=reply
+            button(class="button is-primary entry-reply-submit") Reply
+
+  script(type="text/javascript" src="../static/lib/reply.js")

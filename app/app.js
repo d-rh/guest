@@ -138,7 +138,9 @@ app.route('/login')
 // ----- FEED -----
 app.route('/feed')
   .post(async (req, res) => {
-    await entryController.entryCreatePost(req)
+    if (req.body.newEntry) {
+      await entryController.entryCreatePost(req)
+      .then(console.log(req.body))
       .then(
         res.redirect(
           url.format({
@@ -146,6 +148,16 @@ app.route('/feed')
           })
         )
       )
+    }
+    if (req.body.newReply) {
+      await entryController.replyCreatePost(req)
+      .then(console.log(req.body))
+      .then(res.redirect(
+        url.format({
+          pathname: '/feed/' + req.cookies.username
+        })
+      ))
+    }
   })
   .get(async (req, res) => {
     // all GET requests to /feed redirect to /feed/:username

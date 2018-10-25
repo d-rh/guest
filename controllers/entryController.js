@@ -6,7 +6,8 @@ exports.entryCreatePost = entry =>
       const newEntry = new Entry({
         username: entry.cookies.username,
         content: entry.body.newEntry,
-        date: new Date()
+        date: new Date(),
+        replies: []
       });
       newEntry
         .save()
@@ -29,4 +30,13 @@ exports.getRecentEntries = () => {
     if (err) reject(err);
   });
 };
-
+exports.replyCreatePost = reply => 
+  new Promise((resolve, reject) => {
+    if (reply.body.newReply) {
+      console.log(reply.body.entryId, reply.body.newReply);
+      const query = { _id: reply.body.entryId }
+      Entry.updateOne(query, { $push: { replies: reply.body.newReply }}).exec();
+      resolve(query);
+      if (err) reject(err);
+    }
+  })

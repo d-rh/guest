@@ -19,7 +19,7 @@ exports.entryCreatePost = entry =>
         });
       resolve(newEntry);
     }
-    if (!entry.body.newEntry) {
+    if (!entry.body.newEntry.length) {
       reject('You have to include something in the entry!')
     }
   });

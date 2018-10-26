@@ -148,6 +148,7 @@ app.route('/feed')
           })
         )
       )
+      .catch( err => res.render('error', { err }))
     }
     if (req.body.newReply) {
       await entryController.replyCreatePost(req)
@@ -166,7 +167,12 @@ app.route('/feed')
       })
     )
   })
-app.get('/feed/:username', (_req, res) => {
+app.get('/feed/:username', (req, res) => {
+  if (req.params.username != req.cookies.username) res.redirect(
+    url.format({
+      pathname: '/feed/' + req.cookies.username
+    })
+  )
   return sessionController.getActiveUsers()
     .then(
       (renderUsers) => entryController.getRecentEntries()

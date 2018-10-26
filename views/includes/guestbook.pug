@@ -7,40 +7,43 @@ div(class="tile is-child")
         placeholder="Sign the Guestbook!")
       .control
         button(class="button is-primary" type="submit") Sign
-div(class="tile is-child")    
-  h2(class="subtitle") Recent Guestbook Entries:
-  .entries
-    each entry in renderEntries
-      article(class="media")
-        figure(class="media-left")
-          strong=entry.username
-        div(class="media-content guestbook-entry")
-          div(class="content" id=entry._id)
-            p=entry.content
-            - let date = new Date(entry.date)
-            - date = Date.prototype.toLocaleString.call(date)
-            p=date
-            nav(class="level is-mobile entry-icons")
-              .level-left
-                span(class="level-item") 
-                  i(class="fas fa-reply entry-reply-icon")
-                if entry.username === username
-                  i(class="far fa-trash-alt")
-            each reply in entry.replies
-              article(class="media")
-                figure(class="media-left")
-                  strong=reply.author
-                div(class="media-content entry-reply")
-                  div(class="content")
-                    p=reply.content
-                    - replyDate = Date.prototype.toLocaleString.call(reply.createdAt)
-                    p=replyDate
-                    nav(class="level is-mobile entry-icons")
-                      .level-left
-                        //- span(class="level-item") 
-                        //-   i(class="fas fa-reply entry-reply-icon")
-                        if entry.username === username
-                          i(class="far fa-trash-alt")
+div(class="tile is-child")
+  .card
+    .card-content   
+      h2(class="subtitle") Recent Guestbook Entries:
+      .entries
+        each entry in renderEntries
+          article(class="media")
+            figure(class="media-left")
+              strong=entry.username
+            div(class="media-content guestbook-entry")
+              div(class="content" id=entry._id)
+                p=entry.content
+                - let date = new Date(entry.date)
+                - date = Date.prototype.toLocaleString.call(date)
+                
+                nav(class="level is-mobile entry-icons")
+                  .level-left
+                    span(class="level-item") 
+                      i(class="fas fa-reply entry-reply-icon")
+                    if entry.username === username
+                      i(class="far fa-trash-alt")
+                  .level-right
+                    small=date
+                each reply in entry.replies
+                  article(class="media")
+                    figure(class="media-left")
+                      strong=reply.author
+                    div(class="media-content entry-reply")
+                      div(class="content")
+                        p=reply.content
+                        - replyDate = Date.prototype.toLocaleString.call(reply.createdAt) 
+                        nav(class="level is-mobile entry-icons")
+                          .level-left
+                            if entry.username === username
+                              i(class="far fa-trash-alt")
+                          .level-right  
+                            small=replyDate
 
 
   script(type="text/javascript" src="../static/lib/reply.js")

@@ -33,9 +33,13 @@ exports.getRecentEntries = () => {
 exports.replyCreatePost = reply => 
   new Promise((resolve, reject) => {
     if (reply.body.newReply) {
-      console.log(reply.body.entryId, reply.body.newReply);
+      console.log(reply);
       const query = { _id: reply.body.entryId }
-      Entry.updateOne(query, { $push: { replies: reply.body.newReply }}).exec();
+      Entry.updateOne(query, { $push: { replies: {
+        content: reply.body.newReply,
+        author: reply.cookies.username,
+        createdAt: new Date()
+      }}}).exec();
       resolve(query);
       if (err) reject(err);
     }

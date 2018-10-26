@@ -22,4 +22,4 @@ COMPLETED, PENDING TESTS:
 IDEAS:
 - Events table with RSVP list of users
 - "profile" view for users
-  - Add avatar, optional email (invites to events?)
+  - Add avatar, optional email (invites to events?)   

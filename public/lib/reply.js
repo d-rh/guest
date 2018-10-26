@@ -7,21 +7,21 @@ window.onload = () => {
         const replyTargetId = el.parentNode.id;
         const replyForm = document.createElement('form');
         const replyInput = document.createElement('input');
-        const hiddenInput = document.createElement('input')
+        const hiddenInput = document.createElement('input');
         const replySubmit = document.createElement('button');
         
         replyTargetContentEl = document.getElementById(replyTargetId);
         
         replyForm.setAttribute('method', 'post');
-        replyForm.setAttribute('action', '/feed')
+        replyForm.setAttribute('action', '/feed');
         
         replyInput.setAttribute('type', 'text');
         replyInput.setAttribute('name', 'newReply');
         replyInput.setAttribute('class', 'input');
         
-        hiddenInput.setAttribute('type', 'hidden')
-        hiddenInput.setAttribute('name', 'entryId')
-        hiddenInput.setAttribute('value', replyTargetId)
+        hiddenInput.setAttribute('type', 'hidden');
+        hiddenInput.setAttribute('name', 'entryId');
+        hiddenInput.setAttribute('value', replyTargetId);
         
         replySubmit.setAttribute('type', 'submit');
         replySubmit.setAttribute('class', 'button is-primary');

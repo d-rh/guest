@@ -151,7 +151,6 @@ app.route('/feed')
     }
     if (req.body.newReply) {
       await entryController.replyCreatePost(req)
-      .then(console.log(req.body))
       .then(res.redirect(
         url.format({
           pathname: '/feed/' + req.cookies.username

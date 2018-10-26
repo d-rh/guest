@@ -20,10 +20,12 @@ div(class="tile is-child")
             - let date = new Date(entry.date)
             - date = Date.prototype.toLocaleString.call(date)
             p=date
-            nav(class="level is-mobile")
-              button(class="button is-primary entry-reply-submit") Reply
-              if entry.username === username
-                a(class="delete entry-delete") Delete
+            nav(class="level is-mobile entry-icons")
+              .level-left
+                span(class="level-item") 
+                  i(class="fas fa-reply entry-reply-icon")
+                if entry.username === username
+                  i(class="far fa-trash-alt")
             each reply in entry.replies
               article(class="media")
                 figure(class="media-left")
@@ -33,6 +35,12 @@ div(class="tile is-child")
                     p=reply.content
                     - replyDate = Date.prototype.toLocaleString.call(reply.createdAt)
                     p=replyDate
+                    nav(class="level is-mobile entry-icons")
+                      .level-left
+                        //- span(class="level-item") 
+                        //-   i(class="fas fa-reply entry-reply-icon")
+                        if entry.username === username
+                          i(class="far fa-trash-alt")
 
 
   script(type="text/javascript" src="../static/lib/reply.js")

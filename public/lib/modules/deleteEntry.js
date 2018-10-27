@@ -1,4 +1,4 @@
-window.onload = () => {
+export const deleteEntry = () => {
   const deleteButtons = Array.prototype.slice.call(document.querySelectorAll('.entry-delete-icon'), 0)
   if (deleteButtons.length > 0) {
     deleteButtons.forEach( el =>{
@@ -19,7 +19,7 @@ const findDeleteTargetId = (el) => {
     return el.id
   }
   else {
-    return findReplyTargetId(el.parentNode);
+    return findDeleteTargetId(el.parentNode);
   }
 }
 const deleteInEntryStore = (url, target) => {

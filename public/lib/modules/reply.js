@@ -1,4 +1,4 @@
-window.onload = () => {
+export const reply = () => {
   const replyButtons = Array.prototype.slice.call(document.querySelectorAll('.entry-reply-icon'), 0)
   if (replyButtons.length > 0) {
     replyButtons.forEach( el => {
@@ -44,6 +44,3 @@ const findReplyTargetId = (el) => {
     return findReplyTargetId(el.parentNode);
   }
 }
-
-
-

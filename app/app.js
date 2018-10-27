@@ -167,22 +167,28 @@ app.route('/feed')
       })
     )
   })
-app.get('/feed/:username', (req, res) => {
-  if (req.params.username != req.cookies.username) res.redirect(
-    url.format({
-      pathname: '/feed/' + req.cookies.username
-    })
-  )
-  return sessionController.getActiveUsers()
-    .then(
-      (renderUsers) => entryController.getRecentEntries()
-        .then(
-          (renderEntries) => ({ renderUsers, renderEntries: renderEntries.reverse() })
-        )
+app.route('/feed/:username')
+  .get((req, res) => {
+    if (req.params.username != req.cookies.username) res.redirect(
+      url.format({
+        pathname: '/feed/' + req.cookies.username
+      })
     )
-    .then((data) => res.render('feed', data))
-    .catch(err => res.render('error', { err }));
-})
+    return sessionController.getActiveUsers()
+      .then(
+        (renderUsers) => entryController.getRecentEntries()
+          .then(
+            (renderEntries) => ({ renderUsers, renderEntries: renderEntries.reverse() })
+          )
+      )
+      .then((data) => res.render('feed', data))
+      .catch(err => res.render('error', { err }));
+  })
+  .post((req, res) => {
+    if  (typeof req.body.deleteEntry === 'string') {
+      entryController.entryDeletePost(req.body.deleteEntry);
+    }
+  })
 // ----- LOGOUT -----
 app.route('/logout')
   .get(async (req, res) => {

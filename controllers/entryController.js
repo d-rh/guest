@@ -44,3 +44,11 @@ exports.replyCreatePost = reply =>
       if (err) reject(err);
     }
   })
+exports.entryDeletePost = entryId => 
+  new Promise((resolve, reject) => {
+    if (entryId) {
+      const query = { _id: entryId };
+      Entry.deleteOne(query).exec();
+      resolve(query);
+    }
+  })

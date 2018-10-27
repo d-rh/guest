@@ -48,7 +48,9 @@ exports.logOut = (req, res, next) => new Promise((resolve, reject) => {
   const sessionId = req.cookies.sessId;
   try {
     Session.find().deleteOne({ _id: sessionId }, () => {
-      console.log('Session deleted from db!');
+      console.log('Session ' + 
+      String.prototype.slice.call(sessionId, 0, 8) + 
+      ' removed from session collection.');
       resolve('Logout success!')
     });
   }

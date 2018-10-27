@@ -14,7 +14,6 @@ window.onload = () => {
         replyForm.setAttribute('method', 'post');
         replyForm.setAttribute('action', '/feed');
     
-        
         replyInput.setAttribute('type', 'text');
         replyInput.setAttribute('name', 'newReply');
         replyInput.setAttribute('class', 'input');
@@ -37,7 +36,6 @@ window.onload = () => {
     })
   }
 }
-
 const findReplyTargetId = (el) => {
   if (el.id) {
     return el.id

@@ -27,7 +27,7 @@ div(class="tile is-child")
                     span(class="level-item") 
                       i(class="fas fa-reply entry-reply-icon")
                     if entry.username === username
-                      i(class="far fa-trash-alt")
+                      i(class="far fa-trash-alt entry-delete-icon")
                   .level-right
                     small=date
                 each reply in entry.replies
@@ -41,9 +41,10 @@ div(class="tile is-child")
                         nav(class="level is-mobile entry-icons")
                           .level-left
                             if entry.username === username
-                              i(class="far fa-trash-alt")
+                              i(class="far fa-trash-alt entry-delete-icon")
                           .level-right  
                             small=replyDate
 
 
-  script(type="text/javascript" src="../static/lib/reply.js")
+script(type="text/javascript" src="../static/lib/reply.js")
+script(type="text/javascript" src="../static/lib/deleteEntry.js")

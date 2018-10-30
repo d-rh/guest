@@ -72,26 +72,37 @@ app.route('/register')
     res.render('register', { title: 'Register' });
   })
   .post(async (req, res) => {
-    // register new user -- validate then redirect based on outcome
-    const valResult = await newFriendController.valReg(req.body);
-    if (valResult.errors.length === 0) {
-      await newFriendController.friendCreatePost(req.body).then(result => {
-        return result
-      }).then(regResult => {
-        res.redirect(url.format({
-          pathname: '/register/' + regResult
-        }))
-      })
-    } else {
-      res.render('register', {
-        title: 'Register',
-        renderUserName: valResult.formUserName,
-        renderFirstName: valResult.firstName,
-        renderLastName: valResult.lastName,
-        errors: valResult.errors
-      });
-    }
-  });
+    if (req.body.usernameCheck) {
+      newFriendController.userCheck(req.body.usernameCheck)
+      .then(result => {
+          if (result) {
+            res.json({ validated: true })
+          } else if (!result) {
+            res.json({ validated: false })
+          }
+        })
+      }
+    })
+  //   register new user -- validate then redirect based on outcome
+  //   const valResult = await newFriendController.valReg(req.body);
+  //   if (valResult.errors.length === 0) {
+  //     await newFriendController.friendCreatePost(req.body).then(result => {
+  //       return result
+  //     }).then(regResult => {
+  //       res.redirect(url.format({
+  //         pathname: '/register/' + regResult
+  //       }))
+  //     })
+  //   } else {
+  //     res.render('register', {
+  //       title: 'Register',
+  //       renderUserName: valResult.formUserName,
+  //       renderFirstName: valResult.firstName,
+  //       renderLastName: valResult.lastName,
+  //       errors: valResult.errors
+  //     });
+  //   }
+  // });
 app.route('/register/:outcome')
   // Register/:outcome renders differently, depending on success or failure
   .get((req, res) => {

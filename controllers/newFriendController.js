@@ -2,6 +2,15 @@
 
 const Friend = require('../models/friend');
 
+exports.userCheck = async (potentialNewUser) => {
+  const query = await Friend.findOne({ username: potentialNewUser}).exec();
+  if (query === null) {
+    return true
+  } else if (query) {
+    return false
+  }
+}
+
 exports.valReg = async (req) => {
   let errors = [];
   let formUserName = req.formUserName;

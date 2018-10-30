@@ -13,7 +13,7 @@ formUsername.addEventListener('submit', () => {
 formUsername.addEventListener('input', async () => {
   if (formUsername.value.length > 0) {
     const sourceURL = window.location.href;
-    return usernameCheck(sourceURL, formUsername.value)
+    usernameCheck(sourceURL, formUsername.value);
   }
 })
 const usernameCheck = (url, username) => {
@@ -32,5 +32,12 @@ const usernameCheck = (url, username) => {
     if (contentType && contentType.includes('application/json')) {
       return response.json()
     }
-  }).then(response => console.log(response))
+  }).then(response => {
+    if (response.validated === false) {
+      console.log('flag!!')
+      formUsername.setCustomValidity("Username taken.")
+    } else if (response.validated === true) {
+      console.log(response)
+    }
+  })
 }

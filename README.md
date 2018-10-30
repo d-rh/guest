@@ -1,5 +1,6 @@
 
 TODO:
+- PRIORITY: Work through dynamic username validation - render error message if username is taken!
 - Support annoymous messages
 - Authentication stuff
   - Related to auth stuff: it's possible to clean up registration validation with Regex...

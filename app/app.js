@@ -82,27 +82,29 @@ app.route('/register')
           }
         })
       }
-    })
-  //   register new user -- validate then redirect based on outcome
-  //   const valResult = await newFriendController.valReg(req.body);
-  //   if (valResult.errors.length === 0) {
-  //     await newFriendController.friendCreatePost(req.body).then(result => {
-  //       return result
-  //     }).then(regResult => {
-  //       res.redirect(url.format({
-  //         pathname: '/register/' + regResult
-  //       }))
-  //     })
-  //   } else {
-  //     res.render('register', {
-  //       title: 'Register',
-  //       renderUserName: valResult.formUserName,
-  //       renderFirstName: valResult.firstName,
-  //       renderLastName: valResult.lastName,
-  //       errors: valResult.errors
-  //     });
-  //   }
-  // });
+  })
+  app.route('/newuser')
+    .post(async (req, res) => {
+      const valResult = await newFriendController.valReg(req.body);
+      if (valResult.errors.length === 0) {
+        await newFriendController.friendCreatePost(req.body).then(result => {
+          return result
+        }).then(regResult => {
+          res.redirect(url.format({
+            pathname: '/register/' + regResult
+          }))
+        })
+      } else {
+        res.render('register', {
+          title: 'Register',
+          renderUserName: valResult.formUserName,
+          renderFirstName: valResult.firstName,
+          renderLastName: valResult.lastName,
+          errors: valResult.errors
+        });
+    }
+  })
+
 app.route('/register/:outcome')
   // Register/:outcome renders differently, depending on success or failure
   .get((req, res) => {

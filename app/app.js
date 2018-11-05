@@ -104,7 +104,6 @@ app.route('/register')
         });
     }
   })
-
 app.route('/register/:outcome')
   // Register/:outcome renders differently, depending on success or failure
   .get((req, res) => {
@@ -133,6 +132,8 @@ app.route('/login')
             maxAge: 1000 * 60 * 60 * 8,
             httpOnly: true
           });
+          console.log('\x1b[33m%s\x1b{', user + ' has logged in for session ' +
+          String.prototype.slice.call(result['id'], 0, 8))
           res.redirect(
             url.format({
               pathname: '/feed/' + user
@@ -153,7 +154,6 @@ app.route('/feed')
   .post(async (req, res) => {
     if (req.body.newEntry) {
       await entryController.entryCreatePost(req)
-      .then(console.log(req.body))
       .then(
         res.redirect(
           url.format({
@@ -206,7 +206,13 @@ app.route('/feed/:username')
 app.route('/logout')
   .get(async (req, res) => {
     authController.logOut(req)
-      .then(res.clearCookie('sessId'), res.clearCookie('username'));
+      .then(
+        console.log('\x1b[31m%s\x1b{', 
+        req.cookies.username + ' has logged out, session ' + 
+        String.prototype.slice.call(req.cookies.sessId, 0, 8) + 
+        ' removed from session collection'))
+      .then(
+        res.clearCookie('sessId'), res.clearCookie('username'));
     res.redirect(
       url.format({
         pathname: '/'

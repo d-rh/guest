@@ -33,7 +33,6 @@ exports.verifyAuth = (req, res, next) => new Promise((resolve, reject) => {
   Session.findOne({ _id: req.cookies.sessId }, (err, match) => {
     try {
       if (match) {
-        console.log('logged in :)')
         resolve('Authorized');
       } else {
         resolve('Not authenticated');
@@ -48,9 +47,6 @@ exports.logOut = (req, res, next) => new Promise((resolve, reject) => {
   const sessionId = req.cookies.sessId;
   try {
     Session.find().deleteOne({ _id: sessionId }, () => {
-      console.log('Session ' + 
-      String.prototype.slice.call(sessionId, 0, 8) + 
-      ' removed from session collection.');
       resolve('Logout success!')
     });
   }

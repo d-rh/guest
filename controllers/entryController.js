@@ -33,7 +33,6 @@ exports.getRecentEntries = () => {
 exports.replyCreatePost = reply => 
   new Promise((resolve, reject) => {
     if (reply.body.newReply) {
-      console.log(reply);
       const query = { _id: reply.body.entryId }
       Entry.updateOne(query, { $push: { replies: {
         content: reply.body.newReply,

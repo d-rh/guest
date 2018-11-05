@@ -31,13 +31,6 @@ exports.valReg = async (req) => {
         errors.push(err)
       }
     });
-    // await Friend.findOne({ email: req.email}, (err, match) => {
-    //   try {
-    //     if (match) errors.push('A user with this email address already exists!');
-    //   } catch (err) {
-    //     errors.push(err)
-    //   }
-    // });
   }
   return {
     formUserName: formUserName,

@@ -53,7 +53,6 @@ const usernameCheck = (url, username) => {
       usernameCheckResult.setAttribute('class', 'notification is-danger');
       usernameCheckResult.appendChild(usernameCheckContent);
       usernameCheckContent.innerHTML = 'This username is taken';
-      formUsername.setCustomValidity("This username is taken");
     }
     if (response.validated === true) {
       usernameCheckResult.setAttribute('class', '');

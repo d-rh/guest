@@ -8,7 +8,9 @@ const app = express();
 const newFriendController = require('../controllers/newFriendController');
 const authController = require('../controllers/authController');
 const entryController = require('../controllers/entryController');
-const sessionController = require('../controllers/sessionController')
+const sessionController = require('../controllers/sessionController');
+const verifyLogin = require('../functions/auth/verifyLogin');
+const verifyAuth = require('../functions/auth/verifyAuth');
 
 require('dotenv').config();
 /******************
@@ -45,9 +47,9 @@ app.use('/', (req, res, next) => {
 app.use('/feed', async (req, res, next) => {
   authController.verifyAuth(req, res, next)
     .then(result => {
-      if (result === 'Authorized') {
+      if (result === verifyAuth.AUTHORIZED) {
         next();
-      } else if (result === 'Not authenticated') {
+      } else if (result === verifyAuth.NOT_AUTHORIZED) {
         res.redirect(
           url.format({
             pathname: '/login'
@@ -74,34 +76,34 @@ app.route('/register')
   .post(async (req, res) => {
     if (req.body.usernameCheck) {
       newFriendController.userCheck(req.body.usernameCheck)
-      .then(result => {
+        .then(result => {
           if (result) {
             res.json({ validated: true })
           } else if (!result) {
             res.json({ validated: false })
           }
         })
-      }
+    }
   })
-  app.route('/newuser')
-    .post(async (req, res) => {
-      const valResult = await newFriendController.valReg(req.body);
-      if (valResult.errors.length === 0) {
-        await newFriendController.friendCreatePost(req.body).then(result => {
-          return result
-        }).then(regResult => {
-          res.redirect(url.format({
-            pathname: '/register/' + regResult
-          }))
-        })
-      } else {
-        res.render('register', {
-          title: 'Register',
-          renderUserName: valResult.formUserName,
-          renderFirstName: valResult.firstName,
-          renderLastName: valResult.lastName,
-          errors: valResult.errors
-        });
+app.route('/newuser')
+  .post(async (req, res) => {
+    const valResult = await newFriendController.valReg(req.body);
+    if (valResult.errors.length === 0) {
+      await newFriendController.friendCreatePost(req.body).then(result => {
+        return result
+      }).then(regResult => {
+        res.redirect(url.format({
+          pathname: '/register/' + regResult
+        }))
+      })
+    } else {
+      res.render('register', {
+        title: 'Register',
+        renderUserName: valResult.formUserName,
+        renderFirstName: valResult.firstName,
+        renderLastName: valResult.lastName,
+        errors: valResult.errors
+      });
     }
   })
 app.route('/register/:outcome')
@@ -133,13 +135,13 @@ app.route('/login')
             httpOnly: true
           });
           console.log('\x1b[33m%s\x1b{', user + ' has logged in for session ' +
-          String.prototype.slice.call(result['id'], 0, 8))
+            String.prototype.slice.call(result['id'], 0, 8))
           res.redirect(
             url.format({
               pathname: '/feed/' + user
             })
           );
-        } else if (result === 'Not Authenticated') {
+        } else if (result === verifyLogin.NOT_AUTHENTICATED) {
           console.error(result);
           res.render('login', { title: 'Log In', result });
         }
@@ -154,22 +156,22 @@ app.route('/feed')
   .post(async (req, res) => {
     if (req.body.newEntry) {
       await entryController.entryCreatePost(req)
-      .then(
-        res.redirect(
-          url.format({
-            pathname: '/feed/' + req.cookies.username
-          })
+        .then(
+          res.redirect(
+            url.format({
+              pathname: '/feed/' + req.cookies.username
+            })
+          )
         )
-      )
-      .catch( err => res.render('error', { err }))
+        .catch(err => res.render('error', { err }))
     }
     if (req.body.newReply) {
       await entryController.replyCreatePost(req)
-      .then(res.redirect(
-        url.format({
-          pathname: '/feed/' + req.cookies.username
-        })
-      ))
+        .then(res.redirect(
+          url.format({
+            pathname: '/feed/' + req.cookies.username
+          })
+        ))
     }
   })
   .get(async (req, res) => {
@@ -188,29 +190,25 @@ app.route('/feed/:username')
       })
     )
     return sessionController.getActiveUsers()
-      .then(
-        (renderUsers) => entryController.getRecentEntries()
-          .then(
-            (renderEntries) => ({ renderUsers, renderEntries: renderEntries.reverse() })
-          )
-      )
+      .then( renderUsers => entryController.getRecentEntries()
+          .then( renderEntries => ({ renderUsers, renderEntries: renderEntries.reverse() })))
       .then((data) => res.render('feed', data))
       .catch(err => res.render('error', { err }));
   })
   .post((req, res) => {
-    if  (typeof req.body.deleteEntry === 'string') {
+    if (typeof req.body.deleteEntry === 'string') {
       entryController.entryDeletePost(req.body.deleteEntry);
     }
   })
 // ----- LOGOUT -----
 app.route('/logout')
   .get(async (req, res) => {
-    authController.logOut(req)
+    authController.logOut(req, res)
       .then(
-        console.log('\x1b[31m%s\x1b{', 
-        req.cookies.username + ' has logged out, session ' + 
-        String.prototype.slice.call(req.cookies.sessId, 0, 8) + 
-        ' removed from session collection'))
+        console.log('\x1b[31m%s\x1b{',
+          req.cookies.username + ' has logged out, session ' +
+          String.prototype.slice.call(req.cookies.sessId, 0, 8) +
+          ' removed from session collection'))
       .then(
         res.clearCookie('sessId'), res.clearCookie('username'));
     res.redirect(

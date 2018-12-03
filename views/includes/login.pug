@@ -1,0 +1,28 @@
+block login-form
+  .container
+    section(class="section")
+      form(method="post" action="/login")
+        .field
+          // label(class="label" for="username") Username:
+          input(class="input" name="username" type="text" id="username" placeholder="Username")
+        .field
+          // label(class="label" for="password") Password:
+          input(class="input" name="password" type="password" id="password" placeholder="Password")
+        .control
+          button(class="button is-primary" type="submit") Submit
+      br
+      if result === 'NOT_AUTHENTICATED'
+        div(class="notification is-warning")
+          p Incorrect Username or Password!
+    section(class="section")
+        p If this is your first visit, please 
+        button(class="button is-primary is-outlined register-button" data-target='registerModal') Register Here
+    div(class="modal" id="registerModal")
+      div(class="modal-background" data-target="registerModal")
+      div(class="modal-card")
+        header(class="modal-card-head")
+          p(class="modal-title") Wi-Fi Info
+          button(class="delete registerModalClose" aria-label="close" data-target="registerModal")
+        section(class="modal-card-body")
+          include registerFriend
+    script(type="text/javascript" src="../static/lib/registerModal.js")

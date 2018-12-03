@@ -1,0 +1,12 @@
+extends layout
+block nav
+  include includes/nav.pug
+block main
+  div(class="hero is-fullheight")
+    .hero-head
+
+    .hero-body
+      .container
+        h1(class="title") Thanks for visiting!
+        h2(class="subtitle") Please Log In
+        include includes/login.pug

@@ -1,0 +1,23 @@
+extends layout
+block main-content
+  section(class="hero is-fullheight")
+    .hero-body
+      .container
+        h1(class="hero-head title") Welcome to our home on Rockwell Avenue 
+        h2(class="hero-body subtitle") &#x1F929; We're glad you're here &#x1F929;
+        if user 
+          div(class="hero-foot")
+            a(href="/feed") Come on in!
+    unless user
+      .section
+        div(class="tile is-ancestor")
+          div(class="tile is-parent")
+            div(class="tile is-child is-vertical is-6 welcome-message")
+              p Is this your first visit?
+              br
+              p Register here, and then sign in to leave an entry in the guestbook.
+              br
+              p Thanks for coming!
+              br
+            div(class="tile is-child is-vertical is-6 index-registration")
+              include includes/registerFriend.pug

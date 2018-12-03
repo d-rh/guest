@@ -1,0 +1,12 @@
+doctype html
+html(class="has-navbar-fixed-top")
+  include includes/head.pug
+  body
+    - let user = username;
+    block nav
+      include includes/nav.pug
+    main(class="bd-main")
+      block main
+        block main-content
+    block footer  
+      include includes/foot.pug

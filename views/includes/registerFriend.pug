@@ -1,0 +1,29 @@
+block registration-form
+  form(method="post" action="/newuser" class="registration-form")
+    .field
+      label(class="label" for="formUserName") New username:
+      input(class="input" name="formUserName" type="text" id="formUsername" 
+      value=renderUserName ? renderUserName : "" placeholder="Choose a username" minlength=3 required)
+      div(class="" id="username-check-container")
+        p(id="username-check-result")
+    .field
+      label(class="label" for="formFirstName") First Name:
+      input(class="input" name="formFirstName" type="text" id="firstName" 
+      value=renderFirstName ? renderFirstName : "" placeholder='Enter your first name' required)
+    .field
+      label(class="label" for="formLastName") Last Name:
+      input(class="input" name="formLastName" type="text" id="lastName" 
+      value=renderLastName ? renderLastName : "" placeholder='Enter your last name' required)
+      div
+        p(class="val-result-indicator")
+    .field
+      label(class="label" for="password") New password:
+      input(class="input" name="password" type="password" id="password" minlength=5 required)
+    .field
+      label(class="label" for="passConf") Confirm password:
+      input(class="input" name="passConf" type="password" id="passConf" required)
+      div(class="" id="password-check-container")
+        p(id="password-check-result")
+    .control
+      button(class="button is-primary" type="submit") Submit
+script(type="text/javascript" src="../static/lib/register.js")

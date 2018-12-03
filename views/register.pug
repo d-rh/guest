@@ -1,0 +1,12 @@
+extends layout
+block main
+  unless outcome
+    if (errors)
+      each error in errors
+        p= error
+    include includes/registerFriend.pug
+  if outcome
+    div(class="hero is-fullheight")
+      .hero-body
+        h1(class="hero-head title") Your registration was successful!
+        h2(class="hero-body subtitle") You can use your new login credentials to sign in.

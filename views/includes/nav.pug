@@ -1,0 +1,36 @@
+block nav
+  nav(id="navbar" class="navbar is-fixed-top has-shadow")
+    if user
+      .navbar-brand
+        a(class="navbar-item" href="/feed")
+          img(src="/static/assets/rockwellguest-logo-nav-brand.png")
+        a(role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navMenu")
+            span(aria-hidden="true")
+            span(aria-hidden="true")
+            span(aria-hidden="true")
+      .navbar-start
+      .navbar-end
+        div(class="navbar-menu" id="navMenu")
+          a(class="navbar-item" href="/logout") Log Out
+    unless user
+      .navbar-brand
+        a(class="navbar-item" href="/")
+          img(src="/static/assets/rockwellguest-logo-nav-brand.png")
+        a(role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navMenu")
+          span(aria-hidden="true")
+          span(aria-hidden="true")
+          span(aria-hidden="true")
+      div(class="navbar-menu" id="navMenu")
+        .navbar-start
+        .navbar-end
+          .navbar-item
+            form(class="login-form nav-login--form" method="post" action="/login")
+              .field
+                // label(class="label" for="username") Username:
+                input(class="input navbarUsername" name="username" type="text" id="navUsername" placeholder="Username")
+              .field
+                // label(class="label" for="password") Password:
+                input(class="input navbarPassword" name="password" type="password" id="navPassword" placeholder="Password")
+              .control(class="nav-login--control")
+                button(class="button is-primary" type="submit") Submit
+  script(type="text/javascript" src="../static/lib/navbarBurger.js")

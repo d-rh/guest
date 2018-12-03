@@ -1,0 +1,14 @@
+div(class="tile is-child")
+  button(class="button wifi-button" data-target="wifiModal") Wi-Fi Info
+  div(class="modal" id="wifiModal")
+    div(class="modal-background" data-target="wifiModal")
+    div(class="modal-card")
+      header(class="modal-card-head")
+        p(class="modal-title") Wi-Fi Info
+        button(class="delete wifiModalClose" aria-label="close" data-target="wifiModal")
+      section(class="modal-card-body")
+        p Wi-Fi Information: 
+        p network: Fangorn 
+        p password: peacelovevelo
+
+  script(type="text/javascript" src="../static/lib/wifiModal.js")

@@ -1,7 +1,7 @@
 $body-family: Open Sans;
 $family-sans-serif: Open Sans, sans-serif;
-@import "../../node_modules/bulma/bulma.sass";
-@import "./modules/nav.scss";
-@import "./modules/index.scss";
-@import "./modules/modals.scss";
-@import "./modules/feed.scss"
+@import "../node_modules/bulma/bulma.sass";
+@import "./modules/sass/nav.scss";
+@import "./modules/sass/index.scss";
+@import "./modules/sass/modals.scss";
+@import "./modules/sass/feed.scss"

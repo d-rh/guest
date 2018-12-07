@@ -11,18 +11,20 @@ const entryController = require('../controllers/entryController');
 const sessionController = require('../controllers/sessionController');
 const verifyLogin = require('../functions/auth/verifyLogin');
 const verifyAuth = require('../functions/auth/verifyAuth');
-
 require('dotenv').config();
+
 /******************
 |  Connect DB     |
 ******************/
 mongoose.set('useCreateIndex', true);
+mongoose.connection.on('open', () => {
+  console.log('Successfully Connected to DB')
+})
 mongoose.connect(
   process.env.DB_URI,
   { useNewUrlParser: true }
 )
-  .then(console.log('Successfully connected to MongoDB'))
-  .catch(err => console.log(err));
+
 
 /******************
 |  Config         |
